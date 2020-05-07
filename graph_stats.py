@@ -6,6 +6,7 @@ import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.ticker import Locator as locator
+import numpy as np
 
 def check_graph_type(arg):
     if arg == "cummulative" or \
@@ -38,6 +39,16 @@ def check_source_filename(arg):
     else:
         return True
 
+def check_n_day_av(arg):
+    try:
+        n = int(arg)
+    except ValueError:
+        print("Please provide a valid integer argument for the rolling average")
+        return False
+    if n < 1:
+        print("Please provide a positive integer argument for the rolling average")
+        return False
+    return True
 
 def parse_args(argv):
     settings = {}
@@ -45,6 +56,7 @@ def parse_args(argv):
     settings["yscale"] = "log"
     settings["dataset"] = "pos"
     settings["filename"] = "covid19_tests.txt"
+    settings["n_day_av"] = 1
 
     i = 1
     while i < len(argv):
@@ -57,6 +69,12 @@ def parse_args(argv):
             settings["dataset"] = arg[1]
         elif arg[0] == "filename" and check_source_filename(arg[1]):
             settings["filename"] = arg[1]
+        elif arg[0] == "n_day_av" and check_n_day_av(arg[1]):
+            try:
+                settings["n_day_av"] = int(arg[1])
+            except ValueError:
+                print("Well this is weird... " + arg[1])
+                settings["n_day_av"] = 1
         i = i + 1
 
     return settings
@@ -124,51 +142,44 @@ def print_data(data):
         print("deaths\t" + data["deaths"][d])
         print()
 
-def three_day_av(data):
-    ret_data = {}
+def get_n_day_av(data, settings):
+    ret_data = []
     sum = 0
     n = 0;
 
-    if len(data) < 3:
+    if len(data) < settings["n_day_av"]:
         last_date = None
         last_date_str = None
         for d in data:
             try:
-                dd = datetime.datetime.strptime(d, "%d-%m-%Y")
-            except ValueError:
-                continue
-            if last_date == None or last_date < dd:
-                last_date = dd
-                last_date_str = d
-
-            try:
-                sum = sum + int(data[d])
+                sum = sum + int(d)
             except ValueError:
                 print("bad value in data")
+                continue
             n = n + 1
-        ret_data[last_date_str] = sum / n
+        ret_data = [sum / n]
     else:
-        v1 =  0
-        v2 =  0
-        v3 =  0
+        vals = np.zeros(settings["n_day_av"])
         for d in data:
             try:
-                dd = datetime.datetime.strptime(d, "%d-%m-%Y")
-            except ValueError:
-                continue
-            try:
-                val = int(data[d])
+                val = int(d)
             except ValueError:
                 print("bad value in data")
                 continue
             # valid data, valid date
-            v3 = v2
-            v2 = v1
-            v1 = val
+            i = len(vals) - 1
+            while i > 0:
+                vals[i] = vals[i - 1]
+                i = i - 1
+            vals[0] = val
             n = n + 1
-            if n < 3:
+            if n < settings["n_day_av"]:
                 continue
-            ret_data[d] = (v1 + v2 + v3) / 3
+            sum = 0
+            for v in vals:
+                sum = sum + v
+
+            ret_data = ret_data + [sum / settings["n_day_av"]]
     return ret_data
 
 
@@ -182,6 +193,11 @@ def get_legend_heading(settings):
         log_note = "\n(Log Graph)"
     else:
         log_note = ""
+
+    if settings["n_day_av"] > 1:
+        av_note = " (" + str(settings["n_day_av"]) +" Day Average)"
+    else:
+        av_note = ""
 
     if settings["dataset"] == "tests":
         heading = first_word + \
@@ -198,6 +214,7 @@ def get_legend_heading(settings):
     else:
         print("please give valid plotting data")
         return None, None
+    y_leg = y_leg + av_note
     return y_leg, heading
 
 
@@ -227,6 +244,9 @@ def get_plot_data(data, settings):
             y_data = y_data + [y]
         x_data = x_data + [d]
 
+    if settings["n_day_av"] > 1:
+        y_data = get_n_day_av(y_data, settings)
+        x_data = x_data[settings["n_day_av"] -1:]
     return x_data, y_data
 
 
