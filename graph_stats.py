@@ -179,7 +179,7 @@ def get_n_day_av(data, settings):
             except ValueError:
                 print("bad value in data")
                 continue
-            # valid data, valid date
+            # valid data
             i = len(vals) - 1
             while i > 0:
                 vals[i] = vals[i - 1]
@@ -272,7 +272,6 @@ def get_plot_data(data, settings):
 if __name__ == "__main__":
     settings = parse_args(sys.argv)
     data = parse_data(settings["filename"])
-    print_data(data)
 
     y_leg, heading = get_legend_heading(settings)
     if y_leg == None or heading == None:
