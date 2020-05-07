@@ -3,6 +3,43 @@ date	xx-xx-xxxx
 tests	x
 pos	x
 deaths	x
+recov	x
+
+Entry:
+date	5-03-2020
+tests	x
+pos	1
+deaths	0
+
+Entry:
+date	6-03-2020
+tests	x
+pos	1
+deaths	0
+
+Entry:
+date	7-03-2020
+tests	x
+pos	2
+deaths	0
+
+Entry:
+date	8-03-2020
+tests	x
+pos	3
+deaths	0
+
+Entry:
+date	9-03-2020
+tests	x
+pos	7
+deaths	0
+
+Entry:
+date	10-03-2020
+tests	x
+pos	10
+deaths	0
 
 Entry:
 date	11-03-2020
@@ -105,6 +142,7 @@ date	27-03-2020
 tests	28537
 pos	1170
 deaths	1
+recov	31
 
 Entry:
 date	28-03-2020
@@ -141,6 +179,7 @@ date	02-04-2020
 tests	47965
 pos	1462
 deaths	5
+recov	45
 
 Entry:
 date	03-04-2020
@@ -189,6 +228,7 @@ date	10-04-2020
 tests	73028
 pos	2003
 deaths	24
+recov	410
 
 Entry:
 date	11-04-2020
@@ -243,107 +283,130 @@ date	19-04-2020
 tests	114711
 pos	3158
 deaths	54
+recov	903
 
 Entry:
 date	20-04-2020
 tests	121510
 pos	3300
 deaths	58
-
+recov	1055
 
 Entry:
 date	21-04-2020
 tests	126937
 pos	3465
 deaths	58
+recov	1055
 
 Entry:
 date	22-04-2020
 tests	133774
 pos	3635
 deaths	65
+recov	1055
 
 Entry:
 date	23-04-2020
 tests	143570
 pos	3953
 deaths	75
+recov	1473
 
 Entry:
 date	24-04-2020
 tests	152390
 pos	4220
 deaths	79
+recov	1473
 
 Entry:
 date	25-04-2020
 tests	161004
 pos	4361
 deaths	86
+recov	1473
 
 Entry:
 date	26-04-2020
 tests	168643
 pos	4546
 deaths	87
+recov	1473
 
 Entry:
 date	27-04-2020
 tests	178470
 pos	4793
 deaths	90
+recov	1473
 
 Entry:
 date	28-04-2020
 tests	185497
 pos	4996
 deaths	93
+recov	2073
 
 Entry:
 date	29-04-2020
 tests	197127
 pos	5350
 deaths	103
+recov	2073
 
 Entry:
 date	30-04-2020
 tests	207530
 pos	5647
 deaths	103
+recov	2073
 
 Entry:
 date	01-05-2020
 tests	217522
 pos	5951
 deaths	116
+recov	2382
 
 Entry:
 date	02-05-2020
 tests	230686
 pos	6336
 deaths	123
+recov	2549
 
 Entry:
 date	03-05-2020
 tests	245747
 pos	6783
 deaths	131
+recov	2549
 
 Entry:
 date	04-05-2020
 tests	257541
 pos	7220
 deaths	138
+recov	2746
 
 Entry:
 date	05-05-2020
 tests	268064
 pos	7572
 deaths	148
+recov	2746
 
 Entry:
 date	06-05-2020
 tests	279379
 pos	7808
 deaths	153
+recov	3153
 
+Entry:
+date	07-05-2020
+tests	292153
+pos	8232
+deaths	161
+recov	3153

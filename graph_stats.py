@@ -27,6 +27,7 @@ def check_graph_yscale(arg):
 def check_graph_data_set(arg):
     if arg == "pos" or \
             arg == "tests" or \
+            arg == "recov" or \
             arg == "deaths":
         return True
     else:
@@ -84,6 +85,8 @@ def parse_data(filename):
     tests = {}
     posit = {}
     deaths = {}
+    recov = {}
+
     curr_date = ""
     with open (filename, "r") as f:
         line = f.readline()
@@ -104,42 +107,52 @@ def parse_data(filename):
             elif (data[0].strip() == "deaths"):
                 if not curr_date == "":
                     deaths[curr_date] = data[1].strip()
-            elif (data[0].strip() == ""):
-                pass
+            elif (data[0].strip() == "recov"):
+                if not curr_date == "":
+                    recov[curr_date] = data[1].strip()
             line = f.readline()
     ret_data = {}
     ret_data["dates"] = dates
     ret_data["tests"] = tests
     ret_data["pos"] = posit
     ret_data["deaths"] = deaths
+    ret_data["recov"] = recov
 
     return ret_data
 
 def plot_data(data):
 
-    ax = plt.gca() # get axis
+    #ax = plt.gca() # get axis
+    fig, ax = plt.subplots()
     ax.set_yscale(data["yscale"])
     formatter = mdates.DateFormatter(data["date_format"])
     ax.xaxis.set_major_formatter(formatter)
 
-    locator = mdates.DayLocator(interval=1)
+    #locator = mdates.DayLocator(interval=1)
+    locator = mdates.WeekdayLocator(byweekday=mdates.MO)
 
     ax.xaxis.set_major_locator(locator)
 
-    ax.tick_params(axis='x', rotation=90)
-    plt.plot(data["x_data"], data["y_data"]);
-    plt.title(data["heading"])
-    plt.ylabel(data["y_legend"])
-    plt.xlabel(data["x_legend"])
+    ax.plot(data["x_data"], data["y_data"]);
+    ax.set_title(data["heading"])
+    ax.set_ylabel(data["y_legend"])
+    ax.set_xlabel(data["x_legend"])
+    ax.grid()
+    fig.autofmt_xdate()
     plt.show()
 
 def print_data(data):
     for d in data["dates"]:
         print("Entry:")
         print("date\t" + d)
-        print("tests\t" + data["tests"][d])
-        print("pos\t" + data["pos"][d])
-        print("deaths\t" + data["deaths"][d])
+        if d in data["tests"]:
+            print("tests\t" + data["tests"][d])
+        if d in data["pos"]:
+            print("pos\t" + data["pos"][d])
+        if d in data["deaths"]:
+            print("deaths\t" + data["deaths"][d])
+        if d in data["recov"]:
+            print("recov\t" + data["recov"][d])
         print()
 
 def get_n_day_av(data, settings):
@@ -211,6 +224,10 @@ def get_legend_heading(settings):
         heading = first_word + \
                 "Covid-19 Confirmed Deaths to Date in South Africa" + log_note
         y_leg = "Confirmed Deaths"
+    elif settings["dataset"] == "recov":
+        heading = first_word + \
+                "Covid-19 Confirmed Recoveries to Date in South Africa" + log_note
+        y_leg = "Confirmed Recoveries"
     else:
         print("please give valid plotting data")
         return None, None
@@ -225,6 +242,8 @@ def get_plot_data(data, settings):
     prev_y = 0
 
     for t in data["dates"]:
+        if not t in data[settings["dataset"]]:
+            continue
         try:
             y = int(data[settings["dataset"]][t])
         except ValueError:
@@ -253,6 +272,7 @@ def get_plot_data(data, settings):
 if __name__ == "__main__":
     settings = parse_args(sys.argv)
     data = parse_data(settings["filename"])
+    print_data(data)
 
     y_leg, heading = get_legend_heading(settings)
     if y_leg == None or heading == None:
