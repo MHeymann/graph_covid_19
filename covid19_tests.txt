@@ -1,0 +1,349 @@
+Entry:
+date	xx-xx-xxxx
+tests	x
+pos	x
+deaths	x
+
+Entry:
+date	11-03-2020
+tests	645
+pos	13
+deaths	0
+
+Entry:
+date	12-03-2020
+tests	848
+pos	16
+deaths	0
+
+Entry:
+date	13-03-2020
+tests	924
+pos	24
+deaths	0
+
+Entry:
+date	14-03-2020
+tests	1017
+pos	38
+deaths	0
+
+Entry:
+date	15-03-2020
+tests	1476
+pos	51
+deaths	0
+
+Entry:
+date	16-03-2020
+tests	2405
+pos	62
+deaths	0
+
+Entry:
+date	17-03-2020
+tests	2911
+pos	85
+deaths	0
+
+Entry:
+date	18-03-2020
+tests	3070
+pos	116
+deaths	0
+
+Entry:
+date	19-03-2020
+tests	4832
+pos	150
+deaths	0
+
+Entry:
+date	20-03-2020
+tests	6438
+pos	202
+deaths	0
+
+Entry:
+date	21-03-2020
+tests	7425
+pos	240
+deaths	0
+
+Entry:
+date	22-03-2020
+tests	9315
+pos	274
+deaths	0
+
+Entry:
+date	23-03-2020
+tests	12815
+pos	402
+deaths	0
+
+Entry:
+date	24-03-2020
+tests	15529
+pos	554
+deaths	0
+
+Entry:
+date	25-03-2020
+tests	???
+pos	709
+deaths	0
+
+Entry:
+date	26-03-2020
+tests	20471
+pos	927
+deaths	0
+
+Entry:
+date	27-03-2020
+tests	28537
+pos	1170
+deaths	1
+
+Entry:
+date	28-03-2020
+tests	31963
+pos	1187
+deaths	1
+
+Entry:
+date	29-03-2020
+tests	35593
+pos	1280
+deaths	2
+
+Entry:
+date	30-03-2020
+tests	38409
+pos	1326
+deaths	3
+
+Entry:
+date	31-03-2020
+tests	41072
+pos	1353
+deaths	5
+
+Entry:
+date	01-04-2020
+tests	44292
+pos	1380
+deaths	5
+
+Entry:
+date	02-04-2020
+tests	47965
+pos	1462
+deaths	5
+
+Entry:
+date	03-04-2020
+tests	50361
+pos	1505
+deaths	9
+
+Entry:
+date	04-04-2020
+tests	53937
+pos	1585
+deaths	9
+
+Entry:
+date	05-04-2020
+tests	56873
+pos	1655
+deaths	11
+
+Entry:
+date	06-04-2020
+tests	58098
+pos	1686
+deaths	12
+
+Entry:
+date	07-04-2020
+tests	???
+pos	1749
+deaths	13
+
+Entry:
+date	08-04-2020
+tests	63776
+pos	1845
+deaths	18
+
+Entry:
+date	09-04-2020
+tests	68874
+pos	1934
+deaths	18
+
+Entry:
+date	10-04-2020
+tests	73028
+pos	2003
+deaths	24
+
+Entry:
+date	11-04-2020
+tests	75053
+pos	2028
+deaths	25
+
+Entry:
+date	12-04-2020
+tests	80085
+pos	2173
+deaths	25
+
+Entry:
+date	13-04-2020
+tests	83663
+pos	2272
+deaths	27
+
+Entry:
+date	14-04-2020
+tests	87022
+pos	2415
+deaths	27
+
+Entry:
+date	15-04-2020
+tests	90515
+pos	2506
+deaths	34
+
+Entry:
+date	16-04-2020
+tests	95060
+pos	2605
+deaths	48
+
+Entry:
+date	17-04-2020
+tests	100827
+pos	2783
+deaths	50
+
+Entry:
+date	18-04-2020
+tests	108021
+pos	3034
+deaths	52
+
+Entry:
+date	19-04-2020
+tests	114711
+pos	3158
+deaths	54
+
+Entry:
+date	20-04-2020
+tests	121510
+pos	3300
+deaths	58
+
+
+Entry:
+date	21-04-2020
+tests	126937
+pos	3465
+deaths	58
+
+Entry:
+date	22-04-2020
+tests	133774
+pos	3635
+deaths	65
+
+Entry:
+date	23-04-2020
+tests	143570
+pos	3953
+deaths	75
+
+Entry:
+date	24-04-2020
+tests	152390
+pos	4220
+deaths	79
+
+Entry:
+date	25-04-2020
+tests	161004
+pos	4361
+deaths	86
+
+Entry:
+date	26-04-2020
+tests	168643
+pos	4546
+deaths	87
+
+Entry:
+date	27-04-2020
+tests	178470
+pos	4793
+deaths	90
+
+Entry:
+date	28-04-2020
+tests	185497
+pos	4996
+deaths	93
+
+Entry:
+date	29-04-2020
+tests	197127
+pos	5350
+deaths	103
+
+Entry:
+date	30-04-2020
+tests	207530
+pos	5647
+deaths	103
+
+Entry:
+date	01-05-2020
+tests	217522
+pos	5951
+deaths	116
+
+Entry:
+date	02-05-2020
+tests	230686
+pos	6336
+deaths	123
+
+Entry:
+date	03-05-2020
+tests	245747
+pos	6783
+deaths	131
+
+Entry:
+date	04-05-2020
+tests	257541
+pos	7220
+deaths	138
+
+Entry:
+date	05-05-2020
+tests	268064
+pos	7572
+deaths	148
+
+Entry:
+date	06-05-2020
+tests	279379
+pos	7808
+deaths	153
+
