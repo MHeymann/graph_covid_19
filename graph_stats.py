@@ -8,6 +8,19 @@ import matplotlib.dates as mdates
 from matplotlib.ticker import Locator as locator
 import numpy as np
 
+### Commandline Arguments ######################################################
+
+def get_default_settings():
+    settings = {}
+
+    settings["graphtype"] = "cummulative"
+    settings["yscale"] = "log"
+    settings["dataset"] = "pos"
+    settings["filename"] = "covid19_tests.txt"
+    settings["n_day_av"] = 1
+
+    return settings
+
 def check_graph_type(arg):
     if arg == "cummulative" or \
             arg == "daily":
@@ -52,18 +65,13 @@ def check_n_day_av(arg):
     return True
 
 def parse_args(argv):
-    settings = {}
-    settings["graph_type"] = "cummulative"
-    settings["yscale"] = "log"
-    settings["dataset"] = "pos"
-    settings["filename"] = "covid19_tests.txt"
-    settings["n_day_av"] = 1
+    settings = get_default_settings()
 
     i = 1
     while i < len(argv):
         arg = argv[i].strip().split("=")
-        if arg[0] == "graph_type" and check_graph_type(arg[1]):
-            settings["graph_type"] = arg[1]
+        if arg[0] == "graphtype" and check_graph_type(arg[1]):
+            settings["graphtype"] = arg[1]
         elif arg[0] == "yscale" and check_graph_yscale(arg[1]):
             settings["yscale"] = arg[1]
         elif arg[0] == "dataset" and check_graph_data_set(arg[1]):
@@ -79,6 +87,8 @@ def parse_args(argv):
         i = i + 1
 
     return settings
+
+### Data processing ############################################################
 
 def parse_data(filename):
     dates = []
@@ -120,41 +130,6 @@ def parse_data(filename):
 
     return ret_data
 
-def plot_data(data):
-
-    #ax = plt.gca() # get axis
-    fig, ax = plt.subplots()
-    ax.set_yscale(data["yscale"])
-    formatter = mdates.DateFormatter(data["date_format"])
-    ax.xaxis.set_major_formatter(formatter)
-
-    #locator = mdates.DayLocator(interval=1)
-    locator = mdates.WeekdayLocator(byweekday=mdates.MO)
-
-    ax.xaxis.set_major_locator(locator)
-
-    ax.plot(data["x_data"], data["y_data"]);
-    ax.set_title(data["heading"])
-    ax.set_ylabel(data["y_legend"])
-    ax.set_xlabel(data["x_legend"])
-    ax.grid()
-    fig.autofmt_xdate()
-    plt.show()
-
-def print_data(data):
-    for d in data["dates"]:
-        print("Entry:")
-        print("date\t" + d)
-        if d in data["tests"]:
-            print("tests\t" + data["tests"][d])
-        if d in data["pos"]:
-            print("pos\t" + data["pos"][d])
-        if d in data["deaths"]:
-            print("deaths\t" + data["deaths"][d])
-        if d in data["recov"]:
-            print("recov\t" + data["recov"][d])
-        print()
-
 def get_n_day_av(data, settings):
     ret_data = []
     sum = 0
@@ -195,9 +170,80 @@ def get_n_day_av(data, settings):
             ret_data = ret_data + [sum / settings["n_day_av"]]
     return ret_data
 
+def get_plot_data(data, settings):
+    x_data =  []
+    y_data =  []
+
+    prev_y = 0
+
+    for t in data["dates"]:
+        if not t in data[settings["dataset"]]:
+            continue
+        try:
+            y = int(data[settings["dataset"]][t])
+        except ValueError:
+            continue
+        try:
+            # check date format
+            d = datetime.datetime.strptime(t,"%d-%m-%Y").date()
+        except ValueError:
+            print("bad date format")
+            print(t)
+            continue
+
+        if settings["graphtype"] == "daily":
+            y_data = y_data + [y - prev_y]
+            prev_y = y
+        else:
+            y_data = y_data + [y]
+        x_data = x_data + [d]
+
+    if settings["n_day_av"] > 1:
+        y_data = get_n_day_av(y_data, settings)
+        x_data = x_data[settings["n_day_av"] -1:]
+    return x_data, y_data
+
+def print_data(data):
+    for d in data["dates"]:
+        print("Entry:")
+        print("date\t" + d)
+        if d in data["tests"]:
+            print("tests\t" + data["tests"][d])
+        if d in data["pos"]:
+            print("pos\t" + data["pos"][d])
+        if d in data["deaths"]:
+            print("deaths\t" + data["deaths"][d])
+        if d in data["recov"]:
+            print("recov\t" + data["recov"][d])
+        print()
+
+### Plotting Procedures ########################################################
+
+def plot_data(data):
+
+    #ax = plt.gca() # get axis
+    fig, ax = plt.subplots()
+    formatter = mdates.DateFormatter(data["dateformat"])
+    ax.xaxis.set_major_formatter(formatter)
+
+    #locator = mdates.DayLocator(interval=1)
+    locator = mdates.WeekdayLocator(byweekday=mdates.MO)
+
+    ax.xaxis.set_major_locator(locator)
+
+    ax.plot(data["x_data"], data["y_data"]);
+    ax.set_title(data["heading"])
+    ax.set_ylabel(data["y_legend"])
+    ax.set_xlabel(data["x_legend"])
+    ax.grid()
+    ax.set_yscale(data["yscale"])
+    fig.autofmt_xdate()
+    fig.savefig(data["dataset"] + "_"+ data["graphtype"] + "_" + data["yscale"] +  "_" + \
+            data["x_data"][-1].strftime("%Y-%m-%d"))
+    #plt.show()
 
 def get_legend_heading(settings):
-    if settings["graph_type"] == "cummulative":
+    if settings["graphtype"] == "cummulative":
         first_word = "Cummulative "
     else:
         first_word = "Daily "
@@ -226,7 +272,8 @@ def get_legend_heading(settings):
         y_leg = "Confirmed Deaths"
     elif settings["dataset"] == "recov":
         heading = first_word + \
-                "Covid-19 Confirmed Recoveries to Date in South Africa" + log_note
+                "Covid-19 Confirmed Recoveries to Date in South Africa" + \
+                log_note
         y_leg = "Confirmed Recoveries"
     else:
         print("please give valid plotting data")
@@ -234,40 +281,7 @@ def get_legend_heading(settings):
     y_leg = y_leg + av_note
     return y_leg, heading
 
-
-def get_plot_data(data, settings):
-    x_data =  []
-    y_data =  []
-
-    prev_y = 0
-
-    for t in data["dates"]:
-        if not t in data[settings["dataset"]]:
-            continue
-        try:
-            y = int(data[settings["dataset"]][t])
-        except ValueError:
-            continue
-        try:
-            # check date format
-            d = datetime.datetime.strptime(t,"%d-%m-%Y").date()
-        except ValueError:
-            print("bad date format")
-            print(t)
-            continue
-
-        if settings["graph_type"] == "daily":
-            y_data = y_data + [y - prev_y]
-            prev_y = y
-        else:
-            y_data = y_data + [y]
-        x_data = x_data + [d]
-
-    if settings["n_day_av"] > 1:
-        y_data = get_n_day_av(y_data, settings)
-        x_data = x_data[settings["n_day_av"] -1:]
-    return x_data, y_data
-
+### Main Function ##############################################################
 
 if __name__ == "__main__":
     settings = parse_args(sys.argv)
@@ -281,6 +295,9 @@ if __name__ == "__main__":
 
     x_data, y_data = get_plot_data(data, settings)
 
+    y_data = [y for _,y in sorted(zip(x_data, y_data))]
+    x_data = sorted(x_data)
+
     p_data = {}
     p_data["x_data"] = x_data
     p_data["y_data"] = y_data
@@ -288,7 +305,9 @@ if __name__ == "__main__":
     p_data["y_legend"] = y_leg
     p_data["heading"] = heading
     p_data["yscale"] = settings["yscale"]
-    p_data["date_format"] = "%Y-%m-%d"
+    p_data["dataset"] = settings["dataset"]
+    p_data["graphtype"] = settings["graphtype"]
+    p_data["dateformat"] = "%Y-%m-%d"
 
 
     plot_data(p_data)
