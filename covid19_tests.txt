@@ -432,3 +432,16 @@ pos	10015
 deaths	194
 recov	4173
 
+Entry:
+date	11-05-2020
+tests	356067
+pos	10652
+deaths	206
+recov	4357
+
+Entry:
+date	12-05-2020
+tests	369697
+pos	11350
+deaths	206
+recov	4357

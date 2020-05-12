@@ -18,6 +18,9 @@ def get_default_settings():
     settings["dataset"] = "pos"
     settings["filename"] = "covid19_tests.txt"
     settings["n_day_av"] = 1
+    settings["start_date"] = None
+    settings["end_date"] = None
+
 
     return settings
 
@@ -64,6 +67,14 @@ def check_n_day_av(arg):
         return False
     return True
 
+def check_date_arg(arg):
+    try:
+        datetime.datetime.strptime(arg,"%d-%m-%Y").date()
+    except ValueError:
+        print("Bad date format")
+        return False
+    return True
+
 def parse_args(argv):
     settings = get_default_settings()
 
@@ -84,6 +95,13 @@ def parse_args(argv):
             except ValueError:
                 print("Well this is weird... " + arg[1])
                 settings["n_day_av"] = 1
+        elif arg[0] == "start_date" and check_date_arg(arg[1]):
+            settings["start_date"] = \
+                    datetime.datetime.strptime(arg[1],"%d-%m-%Y").date()
+        elif arg[0] == "end_date" and check_date_arg(arg[1]):
+            settings["end_date"] = \
+                    datetime.datetime.strptime(arg[1],"%d-%m-%Y").date()
+
         i = i + 1
 
     return settings
@@ -191,6 +209,13 @@ def get_plot_data(data, settings):
             print(t)
             continue
 
+        if (not settings["start_date"] == None) and \
+                (d < settings["start_date"]):
+            continue
+        if (not settings["end_date"] == None) and \
+                (d > settings["end_date"]):
+            continue
+
         if settings["graphtype"] == "daily":
             y_data = y_data + [y - prev_y]
             prev_y = y
@@ -217,6 +242,17 @@ def print_data(data):
             print("recov\t" + data["recov"][d])
         print()
 
+def get_png_name(data):
+    name = data["dataset"]
+    name = name + "_" + data["graphtype"]
+    name = name + "_" + data["yscale"]
+    if not data["n_day_av"] == 1:
+        name = name + "_" + str(data["n_day_av"]) + "_day_av"
+    name = name + "_" + data["x_data"][0].strftime(data["dateformat"])
+    name = name + "_" + data["x_data"][-1].strftime(data["dateformat"])
+
+    return name
+
 ### Plotting Procedures ########################################################
 
 def plot_data(data):
@@ -238,15 +274,16 @@ def plot_data(data):
     ax.grid()
     ax.set_yscale(data["yscale"])
     fig.autofmt_xdate()
-    fig.savefig(data["dataset"] + "_"+ data["graphtype"] + "_" + data["yscale"] +  "_" + \
-            data["x_data"][-1].strftime("%Y-%m-%d"))
+    fig.savefig(get_png_name(data))
     #plt.show()
 
 def get_legend_heading(settings):
     if settings["graphtype"] == "cummulative":
         first_word = "Cummulative "
-    else:
+    elif settings["graphtype"] == "daily":
         first_word = "Daily "
+    else:
+        first_word = ""
 
     if settings["yscale"] == "log":
         log_note = "\n(Log Graph)"
@@ -307,6 +344,10 @@ if __name__ == "__main__":
     p_data["yscale"] = settings["yscale"]
     p_data["dataset"] = settings["dataset"]
     p_data["graphtype"] = settings["graphtype"]
+    p_data["n_day_av"] = settings["n_day_av"]
+    p_data["start_date"] = settings["start_date"]
+    p_data["end_date"] = settings["end_date"]
+
     p_data["dateformat"] = "%Y-%m-%d"
 
 
