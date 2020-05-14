@@ -43,6 +43,7 @@ def check_graph_yscale(arg):
 def check_graph_data_set(arg):
     if arg == "pos" or \
             arg == "tests" or \
+            arg == "postests" or \
             arg == "recov" or \
             arg == "deaths":
         return True
@@ -158,7 +159,7 @@ def get_n_day_av(data, settings):
         last_date_str = None
         for d in data:
             try:
-                sum = sum + int(d)
+                sum = sum + d
             except ValueError:
                 print("bad value in data")
                 continue
@@ -167,17 +168,11 @@ def get_n_day_av(data, settings):
     else:
         vals = np.zeros(settings["n_day_av"])
         for d in data:
-            try:
-                val = int(d)
-            except ValueError:
-                print("bad value in data")
-                continue
-            # valid data
             i = len(vals) - 1
             while i > 0:
                 vals[i] = vals[i - 1]
                 i = i - 1
-            vals[0] = val
+            vals[0] = d
             n = n + 1
             if n < settings["n_day_av"]:
                 continue
@@ -193,14 +188,14 @@ def get_plot_data(data, settings):
     y_data =  []
 
     prev_y = 0
+    if settings["dataset"] == "postests":
+        prev_tsts = 0
+        prev_pos = 0
+    else:
+        prev_y = 0
+
 
     for t in data["dates"]:
-        if not t in data[settings["dataset"]]:
-            continue
-        try:
-            y = int(data[settings["dataset"]][t])
-        except ValueError:
-            continue
         try:
             # check date format
             d = datetime.datetime.strptime(t,"%d-%m-%Y").date()
@@ -216,11 +211,39 @@ def get_plot_data(data, settings):
                 (d > settings["end_date"]):
             continue
 
-        if settings["graphtype"] == "daily":
-            y_data = y_data + [y - prev_y]
-            prev_y = y
-        else:
+        # check and get data
+        if settings["dataset"] == "postests":
+            if not t in data["pos"] or not t in data["tests"]:
+                continue
+            try:
+                tsts = int(data["tests"][t])
+                pos = int(data["pos"][t])
+            except ValueError:
+                continue
+
+            if settings["graphtype"] == "daily":
+                pos = pos - prev_pos
+                tsts = tsts - prev_tsts
+                prev_pos = pos
+                prev_tsts = tsts
+            if tsts == 0:
+                continue
+            y = pos / tsts
             y_data = y_data + [y]
+        else:
+            if not t in data[settings["dataset"]]:
+                continue
+            try:
+                y = int(data[settings["dataset"]][t])
+            except ValueError:
+                continue
+
+            if settings["graphtype"] == "daily":
+                y_data = y_data + [y - prev_y]
+                prev_y = y
+            else:
+                y_data = y_data + [y]
+
         x_data = x_data + [d]
 
     if settings["n_day_av"] > 1:
@@ -303,6 +326,11 @@ def get_legend_heading(settings):
         heading = first_word + \
                 "Covid-19 Confirmed Cases to Date in South Africa" + log_note
         y_leg = "Confirmed Cases"
+    elif settings["dataset"] == "postests":
+        heading = first_word + \
+                "Covid-19 proportion of Tests Positive to Date in South Africa" \
+                + log_note
+        y_leg = "Proportion Positive"
     elif settings["dataset"] == "deaths":
         heading = first_word + \
                 "Covid-19 Confirmed Deaths to Date in South Africa" + log_note
