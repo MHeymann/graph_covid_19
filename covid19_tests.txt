@@ -460,3 +460,23 @@ pos	12739
 deaths	238
 recov	5676
 
+Entry:
+date	15-05-2020
+tests	421555
+pos	13524
+deaths	247
+recov	6083
+
+Entry:
+date	16-05-2020
+tests	439559
+pos	14355
+deaths	261
+recov	6478
+
+Entry:
+date	17-05-2020
+tests	460873
+pos	15515
+deaths	264
+recov	7006
