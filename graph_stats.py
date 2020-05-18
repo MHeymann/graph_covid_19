@@ -8,6 +8,15 @@ import matplotlib.dates as mdates
 from matplotlib.ticker import Locator as locator
 import numpy as np
 
+### Constants ##################################################################
+
+POS = "pos"
+TESTS = "tests"
+POSTESTS = "postests"
+RECOV = "recov"
+DEATHS = "deaths"
+GRAPH_TYPES = np.array([POS, TESTS, POSTESTS, RECOV, DEATHS])
+
 ### Commandline Arguments ######################################################
 
 def get_default_settings():
@@ -15,7 +24,7 @@ def get_default_settings():
 
     settings["graphtype"] = "cummulative"
     settings["yscale"] = "log"
-    settings["dataset"] = "pos"
+    settings["dataset"] = POS
     settings["filename"] = "covid19_tests.txt"
     settings["n_day_av"] = 1
     settings["start_date"] = None
@@ -41,11 +50,7 @@ def check_graph_yscale(arg):
         return False
 
 def check_graph_data_set(arg):
-    if arg == "pos" or \
-            arg == "tests" or \
-            arg == "postests" or \
-            arg == "recov" or \
-            arg == "deaths":
+    if arg in GRAPH_TYPES:
         return True
     else:
         print("Unknown argument for graph data set: " + arg)
@@ -110,7 +115,7 @@ def parse_args(argv):
 ### Data processing ############################################################
 
 def parse_data(filename):
-    dates = []
+    dates = np.array([])
     tests = {}
     posit = {}
     deaths = {}
@@ -126,31 +131,31 @@ def parse_data(filename):
             if data[0].strip() == "date":
                 curr_date = data[1].strip()
                 if not curr_date == "":
-                    dates = dates + [curr_date]
-            elif (data[0].strip() == "tests"):
+                    dates = np.append(dates, curr_date)
+            elif (data[0].strip() == TESTS):
                 if not curr_date == "":
                     tests[curr_date] = data[1].strip()
-            elif (data[0].strip() == "pos"):
+            elif (data[0].strip() == POS):
                 if not curr_date == "":
                     posit[curr_date] = data[1].strip()
-            elif (data[0].strip() == "deaths"):
+            elif (data[0].strip() == DEATHS):
                 if not curr_date == "":
                     deaths[curr_date] = data[1].strip()
-            elif (data[0].strip() == "recov"):
+            elif (data[0].strip() == RECOV):
                 if not curr_date == "":
                     recov[curr_date] = data[1].strip()
             line = f.readline()
     ret_data = {}
     ret_data["dates"] = dates
-    ret_data["tests"] = tests
-    ret_data["pos"] = posit
-    ret_data["deaths"] = deaths
-    ret_data["recov"] = recov
+    ret_data[TESTS] = tests
+    ret_data[POS] = posit
+    ret_data[DEATHS] = deaths
+    ret_data[RECOV] = recov
 
     return ret_data
 
 def get_n_day_av(data, settings):
-    ret_data = []
+    ret_data = np.array([])
     sum = 0
     n = 0;
 
@@ -164,7 +169,7 @@ def get_n_day_av(data, settings):
                 print("bad value in data")
                 continue
             n = n + 1
-        ret_data = [sum / n]
+        ret_data = np.array([sum / n])
     else:
         vals = np.zeros(settings["n_day_av"])
         for d in data:
@@ -180,89 +185,127 @@ def get_n_day_av(data, settings):
             for v in vals:
                 sum = sum + v
 
-            ret_data = ret_data + [sum / settings["n_day_av"]]
+            ret_data = np.append(ret_data, sum / settings["n_day_av"])
     return ret_data
 
-def get_plot_data(data, settings):
-    x_data =  []
-    y_data =  []
+def convert_date(sdate):
+    try:
+        # check date format
+        d = datetime.datetime.strptime(sdate,"%d-%m-%Y").date()
+    except ValueError:
+        print("bad date format")
+        print(sdate)
+        return None
+    return d
 
-    prev_y = 0
-    if settings["dataset"] == "postests":
-        prev_tsts = 0
-        prev_pos = 0
-    else:
-        prev_y = 0
 
+def is_date_valid_range(date, settings):
+    if (not settings["start_date"] == None) and \
+            (d < settings["start_date"]):
+        return False
+    if (not settings["end_date"] == None) and \
+            (d > settings["end_date"]):
+        return False
+    return True
+
+def get_pos_tests_data(data, settings):
+    x_data =  np.array([])
+    pos_data =  np.array([])
+    tst_data =  np.array([])
+
+    prev_tsts = 0
+    prev_pos = 0
 
     for t in data["dates"]:
+        d = convert_date(t)
+        if d == None:
+            continue
+
+        if not is_date_valid_range(d, settings):
+            continue
+
+        if not t in data[POS] or not t in data[TESTS]:
+            continue
         try:
-            # check date format
-            d = datetime.datetime.strptime(t,"%d-%m-%Y").date()
+            tsts = int(data[TESTS][t])
+            pos = int(data[POS][t])
         except ValueError:
-            print("bad date format")
-            print(t)
             continue
 
-        if (not settings["start_date"] == None) and \
-                (d < settings["start_date"]):
+        if settings["graphtype"] == "daily":
+            cur_pos = pos
+            cur_tst = tsts
+            pos = pos - prev_pos
+            tsts = tsts - prev_tsts
+            prev_pos = cur_pos
+            prev_tsts = cur_tst
+        if tsts == 0:
             continue
-        if (not settings["end_date"] == None) and \
-                (d > settings["end_date"]):
+        pos_data = np.append(pos_data, pos)
+        tst_data = np.append(tst_data, tsts)
+        x_data = np.append(x_data, d)
+
+    if settings["n_day_av"] > 1:
+        pos_data = get_n_day_av(pos_data, settings)
+        tst_data = get_n_day_av(tst_data, settings)
+        x_data = x_data[settings["n_day_av"] -1:]
+    return x_data, pos_data / tst_data
+
+def get_std_data(data, settings):
+    x_data =  np.array([])
+    y_data =  np.array([])
+
+    prev_y = 0
+
+    for t in data["dates"]:
+        d = convert_date(t)
+        if d == None:
             continue
 
-        # check and get data
-        if settings["dataset"] == "postests":
-            if not t in data["pos"] or not t in data["tests"]:
-                continue
-            try:
-                tsts = int(data["tests"][t])
-                pos = int(data["pos"][t])
-            except ValueError:
-                continue
+        if not is_date_valid_range(d, settings):
+            continue
 
-            if settings["graphtype"] == "daily":
-                pos = pos - prev_pos
-                tsts = tsts - prev_tsts
-                prev_pos = pos
-                prev_tsts = tsts
-            if tsts == 0:
-                continue
-            y = pos / tsts
-            y_data = y_data + [y]
+        if not t in data[settings["dataset"]]:
+            continue
+        try:
+            y = int(data[settings["dataset"]][t])
+        except ValueError:
+            continue
+
+        if settings["graphtype"] == "daily":
+            y_data = np.append(y_data, y - prev_y)
+            prev_y = y
         else:
-            if not t in data[settings["dataset"]]:
-                continue
-            try:
-                y = int(data[settings["dataset"]][t])
-            except ValueError:
-                continue
+            y_data = np.append(y_data, y)
 
-            if settings["graphtype"] == "daily":
-                y_data = y_data + [y - prev_y]
-                prev_y = y
-            else:
-                y_data = y_data + [y]
-
-        x_data = x_data + [d]
-
+        x_data = np.append(x_data, d)
     if settings["n_day_av"] > 1:
         y_data = get_n_day_av(y_data, settings)
         x_data = x_data[settings["n_day_av"] -1:]
+    return x_data, y_data
+
+
+def get_plot_data(data, settings):
+
+    if settings["dataset"] == POSTESTS:
+        x_data, y_data = get_pos_tests_data(data, settings)
+    else:
+        x_data, y_data = get_std_data(data, settings)
+
     return x_data, y_data
 
 def print_data(data):
     for d in data["dates"]:
         print("Entry:")
         print("date\t" + d)
-        if d in data["tests"]:
-            print("tests\t" + data["tests"][d])
-        if d in data["pos"]:
-            print("pos\t" + data["pos"][d])
-        if d in data["deaths"]:
-            print("deaths\t" + data["deaths"][d])
-        if d in data["recov"]:
-            print("recov\t" + data["recov"][d])
+        if d in data[TESTS]:
+            print("tests\t" + data[TESTS][d])
+        if d in data[POS]:
+            print("pos\t" + data[POS][d])
+        if d in data[DEATHS]:
+            print("deaths\t" + data[DEATHS][d])
+        if d in data[RECOV]:
+            print("recov\t" + data[RECOV][d])
         print()
 
 def get_png_name(data):
@@ -318,24 +361,24 @@ def get_legend_heading(settings):
     else:
         av_note = ""
 
-    if settings["dataset"] == "tests":
+    if settings["dataset"] == TESTS:
         heading = first_word + \
                 "Covid-19 Tests Performed to Date in South Africa" + log_note
         y_leg = "Tests Performed"
-    elif settings["dataset"] == "pos":
+    elif settings["dataset"] == POS:
         heading = first_word + \
                 "Covid-19 Confirmed Cases to Date in South Africa" + log_note
         y_leg = "Confirmed Cases"
-    elif settings["dataset"] == "postests":
+    elif settings["dataset"] == POSTESTS:
         heading = first_word + \
                 "Covid-19 proportion of Tests Positive to Date in South Africa" \
                 + log_note
         y_leg = "Proportion Positive"
-    elif settings["dataset"] == "deaths":
+    elif settings["dataset"] == DEATHS:
         heading = first_word + \
                 "Covid-19 Confirmed Deaths to Date in South Africa" + log_note
         y_leg = "Confirmed Deaths"
-    elif settings["dataset"] == "recov":
+    elif settings["dataset"] == RECOV:
         heading = first_word + \
                 "Covid-19 Confirmed Recoveries to Date in South Africa" + \
                 log_note
