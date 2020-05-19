@@ -455,10 +455,10 @@ def get_legend_heading(settings):
         return None, None
 
     if settings[YSCALE] == LOG:
-        heading  = heading + "\n(Log Graph)"
+        y_leg  = y_leg + " (Log Scale)"
 
     if settings[N_DAY_AV] > 1:
-        y_leg = y_leg + " (" + str(settings[N_DAY_AV]) +" Day Average)"
+        heading = heading + "\n(" + str(settings[N_DAY_AV]) +" Day Average)"
 
     return y_leg, heading
 
