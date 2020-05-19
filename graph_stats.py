@@ -16,6 +16,7 @@ TESTS = "tests"
 POSTESTS = "postests"
 RECOV = "recov"
 DEATHS = "deaths"
+ACTIVE = "active"
 
 GRAPHTYPE = "graphtype"
 YSCALE = "yscale"
@@ -25,7 +26,7 @@ N_DAY_AV = "n_day_av"
 START_DATE = "start_date"
 END_DATE = "end_date"
 
-CUMMULATIVE = "cummulative"
+TOTAL = "total"
 LOG = "log"
 LINEAR = "linear"
 DAILY = "daily"
@@ -37,8 +38,8 @@ X_LEGEND = "x_legend"
 Y_LEGEND = "y_legend"
 HEADING = "heading"
 
-DATA_SETS = np.array([POS, TESTS, POSTESTS, RECOV, DEATHS])
-GRAPHTYPE_OPTS = np.array([CUMMULATIVE, DAILY])
+DATA_SETS = np.array([POS, TESTS, RECOV, DEATHS, POSTESTS, ACTIVE])
+GRAPHTYPE_OPTS = np.array([TOTAL, DAILY])
 YSCALE_OPTS = np.array([LOG, LINEAR])
 
 DEFAULT_FILENAME = "covid19_tests.txt"
@@ -50,7 +51,7 @@ DFORMAT_YEAR_LST = "%d-%m-%Y"
 def get_default_settings():
     settings = {}
 
-    settings[GRAPHTYPE] = CUMMULATIVE
+    settings[GRAPHTYPE] = TOTAL
     settings[YSCALE] = LOG
     settings[DATASET] = POS
     settings[FILENAME] = DEFAULT_FILENAME
@@ -273,6 +274,49 @@ def get_pos_tests_data(data, settings):
         x_data = x_data[settings[N_DAY_AV] -1:]
     return x_data, pos_data / tst_data
 
+def get_active_data(data, settings):
+    x_data =  np.array([])
+    y_data =  np.array([])
+
+    prev_active = -1
+
+    for t in data[DATE]:
+        d = convert_date(t)
+        if d == None:
+            continue
+
+        if not is_date_valid_range(d, settings):
+            continue
+
+        if not t in data[POS] or not t in data[RECOV]:
+            continue
+        try:
+            recov = int(data[RECOV][t])
+            pos = int(data[POS][t])
+        except ValueError:
+            continue
+
+        active = pos - recov
+        if active < 0:
+            print("negative active cases!!!")
+            continue
+
+        if settings[GRAPHTYPE] == DAILY:
+            if prev_active < 0:
+                prev_active = active
+                continue
+            y_data = np.append(y_data, active - prev_active)
+            prev_active = active
+        else:
+            y_data = np.append(y_data, active)
+
+        x_data = np.append(x_data, d)
+    if settings[N_DAY_AV] > 1:
+        y_data = get_n_day_av(y_data, settings)
+        x_data = x_data[settings[N_DAY_AV] -1:]
+    return x_data, y_data
+
+
 def get_std_data(data, settings):
     x_data =  np.array([])
     y_data =  np.array([])
@@ -311,6 +355,8 @@ def get_plot_data(data, settings):
 
     if settings[DATASET] == POSTESTS:
         x_data, y_data = get_pos_tests_data(data, settings)
+    elif settings[DATASET] == ACTIVE:
+        x_data, y_data = get_active_data(data, settings)
     else:
         x_data, y_data = get_std_data(data, settings)
 
@@ -368,7 +414,7 @@ def plot_data(data):
 def get_legend_heading(settings):
     heading = ""
 
-    if settings[GRAPHTYPE] == CUMMULATIVE:
+    if settings[GRAPHTYPE] == TOTAL:
         heading = heading + "Cummulative "
     elif settings[GRAPHTYPE] == DAILY:
         heading = heading + "Daily "
@@ -378,23 +424,31 @@ def get_legend_heading(settings):
 
     if settings[DATASET] == TESTS:
         heading = heading + \
-                "Covid-19 Tests Performed to Date in South Africa"
+                "Covid-19 Tests Performed in South Africa"
         y_leg = "Tests Performed"
     elif settings[DATASET] == POS:
         heading = heading + \
-                "Covid-19 Confirmed Cases to Date in South Africa"
+                "Covid-19 Confirmed Cases in South Africa"
         y_leg = "Confirmed Cases"
     elif settings[DATASET] == POSTESTS:
         heading = heading + \
-                "Covid-19 proportion of Tests Positive to Date in South Africa" 
+                "Covid-19 proportion of Tests Positive in South Africa"
         y_leg = "Proportion Positive"
+    elif settings[DATASET] == ACTIVE:
+        if settings[GRAPHTYPE] == DAILY:
+            heading = "Daily change in "
+        else:
+            heading = "Total known "
+        heading = heading + \
+                "Covid-19 Active Cases in South Africa"
+        y_leg = "Active Cases"
     elif settings[DATASET] == DEATHS:
         heading = heading + \
-                "Covid-19 Confirmed Deaths to Date in South Africa"
+                "Covid-19 Confirmed Deaths in South Africa"
         y_leg = "Confirmed Deaths"
     elif settings[DATASET] == RECOV:
         heading = heading + \
-                "Covid-19 Confirmed Recoveries to Date in South Africa"
+                "Covid-19 Confirmed Recoveries in South Africa"
         y_leg = "Confirmed Recoveries"
     else:
         print("please give valid plotting data")
