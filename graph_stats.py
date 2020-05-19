@@ -10,51 +10,73 @@ import numpy as np
 
 ### Constants ##################################################################
 
+DATE = "date"
 POS = "pos"
 TESTS = "tests"
 POSTESTS = "postests"
 RECOV = "recov"
 DEATHS = "deaths"
-GRAPH_TYPES = np.array([POS, TESTS, POSTESTS, RECOV, DEATHS])
+
+GRAPHTYPE = "graphtype"
+YSCALE = "yscale"
+DATASET = "dataset"
+FILENAME = "filename"
+N_DAY_AV = "n_day_av"
+START_DATE = "start_date"
+END_DATE = "end_date"
+
+CUMMULATIVE = "cummulative"
+LOG = "log"
+LINEAR = "linear"
+DAILY = "daily"
+
+DATEFORMAT = "dateformat"
+X_DATA = "x_data"
+Y_DATA = "y_data"
+X_LEGEND = "x_legend"
+Y_LEGEND = "y_legend"
+HEADING = "heading"
+
+DATA_SETS = np.array([POS, TESTS, POSTESTS, RECOV, DEATHS])
+GRAPHTYPE_OPTS = np.array([CUMMULATIVE, DAILY])
+YSCALE_OPTS = np.array([LOG, LINEAR])
+
+DEFAULT_FILENAME = "covid19_tests.txt"
+DFORMAT_YEAR_FRST = "%Y-%m-%d"
+DFORMAT_YEAR_LST = "%d-%m-%Y"
 
 ### Commandline Arguments ######################################################
 
 def get_default_settings():
     settings = {}
 
-    settings["graphtype"] = "cummulative"
-    settings["yscale"] = "log"
-    settings["dataset"] = POS
-    settings["filename"] = "covid19_tests.txt"
-    settings["n_day_av"] = 1
-    settings["start_date"] = None
-    settings["end_date"] = None
+    settings[GRAPHTYPE] = CUMMULATIVE
+    settings[YSCALE] = LOG
+    settings[DATASET] = POS
+    settings[FILENAME] = DEFAULT_FILENAME
+    settings[N_DAY_AV] = 1
+    settings[START_DATE] = None
+    settings[END_DATE] = None
 
 
     return settings
 
-def check_graph_type(arg):
-    if arg == "cummulative" or \
-            arg == "daily":
+def std_check_string_arg(arg, valids, descript):
+    if arg in valids:
         return True
     else:
-        print("Unknown argument for graph type: " + arg)
+        print("Unknown argument for " + descript + ": " + arg)
         return False
+
+def check_graph_type(arg):
+    return std_check_string_arg(arg, GRAPHTYPE_OPTS, "graph type")
 
 def check_graph_yscale(arg):
-    if arg == "log" or \
-            arg == "linear":
-        return True
-    else:
-        print("Unknown argument for graph y scale: " + arg)
-        return False
+    return std_check_string_arg(arg, YSCALE_OPTS, "graph y scale")
 
 def check_graph_data_set(arg):
-    if arg in GRAPH_TYPES:
-        return True
-    else:
-        print("Unknown argument for graph data set: " + arg)
-        return False
+    return std_check_string_arg(arg, DATA_SETS, "graph data set")
+
 def check_source_filename(arg):
     if not os.path.exists() or not os.path.isfile():
         print("Not a valid file: " + arg)
@@ -75,7 +97,7 @@ def check_n_day_av(arg):
 
 def check_date_arg(arg):
     try:
-        datetime.datetime.strptime(arg,"%d-%m-%Y").date()
+        datetime.datetime.strptime(arg, DFORMAT_YEAR_LST).date()
     except ValueError:
         print("Bad date format")
         return False
@@ -87,26 +109,26 @@ def parse_args(argv):
     i = 1
     while i < len(argv):
         arg = argv[i].strip().split("=")
-        if arg[0] == "graphtype" and check_graph_type(arg[1]):
-            settings["graphtype"] = arg[1]
-        elif arg[0] == "yscale" and check_graph_yscale(arg[1]):
-            settings["yscale"] = arg[1]
-        elif arg[0] == "dataset" and check_graph_data_set(arg[1]):
-            settings["dataset"] = arg[1]
-        elif arg[0] == "filename" and check_source_filename(arg[1]):
-            settings["filename"] = arg[1]
-        elif arg[0] == "n_day_av" and check_n_day_av(arg[1]):
+        if arg[0] == GRAPHTYPE and check_graph_type(arg[1]):
+            settings[GRAPHTYPE] = arg[1]
+        elif arg[0] == YSCALE and check_graph_yscale(arg[1]):
+            settings[YSCALE] = arg[1]
+        elif arg[0] == DATASET and check_graph_data_set(arg[1]):
+            settings[DATASET] = arg[1]
+        elif arg[0] == FILENAME and check_source_filename(arg[1]):
+            settings[FILENAME] = arg[1]
+        elif arg[0] == N_DAY_AV and check_n_day_av(arg[1]):
             try:
-                settings["n_day_av"] = int(arg[1])
+                settings[N_DAY_AV] = int(arg[1])
             except ValueError:
                 print("Well this is weird... " + arg[1])
-                settings["n_day_av"] = 1
-        elif arg[0] == "start_date" and check_date_arg(arg[1]):
-            settings["start_date"] = \
-                    datetime.datetime.strptime(arg[1],"%d-%m-%Y").date()
-        elif arg[0] == "end_date" and check_date_arg(arg[1]):
-            settings["end_date"] = \
-                    datetime.datetime.strptime(arg[1],"%d-%m-%Y").date()
+                settings[N_DAY_AV] = 1
+        elif arg[0] == START_DATE and check_date_arg(arg[1]):
+            settings[START_DATE] = \
+                    datetime.datetime.strptime(arg[1], DFORMAT_YEAR_LST).date()
+        elif arg[0] == END_DATE and check_date_arg(arg[1]):
+            settings[END_DATE] = \
+                    datetime.datetime.strptime(arg[1], DFORMAT_YEAR_LST).date()
 
         i = i + 1
 
@@ -128,7 +150,7 @@ def parse_data(filename):
             data = line.split("\t")
             if (data[0].strip() == "Entry:"):
                 curr_date = ""
-            if data[0].strip() == "date":
+            if data[0].strip() == DATE:
                 curr_date = data[1].strip()
                 if not curr_date == "":
                     dates = np.append(dates, curr_date)
@@ -146,7 +168,7 @@ def parse_data(filename):
                     recov[curr_date] = data[1].strip()
             line = f.readline()
     ret_data = {}
-    ret_data["dates"] = dates
+    ret_data[DATE] = dates
     ret_data[TESTS] = tests
     ret_data[POS] = posit
     ret_data[DEATHS] = deaths
@@ -159,7 +181,7 @@ def get_n_day_av(data, settings):
     sum = 0
     n = 0;
 
-    if len(data) < settings["n_day_av"]:
+    if len(data) < settings[N_DAY_AV]:
         last_date = None
         last_date_str = None
         for d in data:
@@ -171,7 +193,7 @@ def get_n_day_av(data, settings):
             n = n + 1
         ret_data = np.array([sum / n])
     else:
-        vals = np.zeros(settings["n_day_av"])
+        vals = np.zeros(settings[N_DAY_AV])
         for d in data:
             i = len(vals) - 1
             while i > 0:
@@ -179,19 +201,19 @@ def get_n_day_av(data, settings):
                 i = i - 1
             vals[0] = d
             n = n + 1
-            if n < settings["n_day_av"]:
+            if n < settings[N_DAY_AV]:
                 continue
             sum = 0
             for v in vals:
                 sum = sum + v
 
-            ret_data = np.append(ret_data, sum / settings["n_day_av"])
+            ret_data = np.append(ret_data, sum / settings[N_DAY_AV])
     return ret_data
 
 def convert_date(sdate):
     try:
         # check date format
-        d = datetime.datetime.strptime(sdate,"%d-%m-%Y").date()
+        d = datetime.datetime.strptime(sdate, DFORMAT_YEAR_LST).date()
     except ValueError:
         print("bad date format")
         print(sdate)
@@ -200,11 +222,11 @@ def convert_date(sdate):
 
 
 def is_date_valid_range(date, settings):
-    if (not settings["start_date"] == None) and \
-            (d < settings["start_date"]):
+    if (not settings[START_DATE] == None) and \
+            (d < settings[START_DATE]):
         return False
-    if (not settings["end_date"] == None) and \
-            (d > settings["end_date"]):
+    if (not settings[END_DATE] == None) and \
+            (d > settings[END_DATE]):
         return False
     return True
 
@@ -216,7 +238,7 @@ def get_pos_tests_data(data, settings):
     prev_tsts = 0
     prev_pos = 0
 
-    for t in data["dates"]:
+    for t in data[DATE]:
         d = convert_date(t)
         if d == None:
             continue
@@ -232,7 +254,7 @@ def get_pos_tests_data(data, settings):
         except ValueError:
             continue
 
-        if settings["graphtype"] == "daily":
+        if settings[GRAPHTYPE] == DAILY:
             cur_pos = pos
             cur_tst = tsts
             pos = pos - prev_pos
@@ -245,10 +267,10 @@ def get_pos_tests_data(data, settings):
         tst_data = np.append(tst_data, tsts)
         x_data = np.append(x_data, d)
 
-    if settings["n_day_av"] > 1:
+    if settings[N_DAY_AV] > 1:
         pos_data = get_n_day_av(pos_data, settings)
         tst_data = get_n_day_av(tst_data, settings)
-        x_data = x_data[settings["n_day_av"] -1:]
+        x_data = x_data[settings[N_DAY_AV] -1:]
     return x_data, pos_data / tst_data
 
 def get_std_data(data, settings):
@@ -257,7 +279,7 @@ def get_std_data(data, settings):
 
     prev_y = 0
 
-    for t in data["dates"]:
+    for t in data[DATE]:
         d = convert_date(t)
         if d == None:
             continue
@@ -265,29 +287,29 @@ def get_std_data(data, settings):
         if not is_date_valid_range(d, settings):
             continue
 
-        if not t in data[settings["dataset"]]:
+        if not t in data[settings[DATASET]]:
             continue
         try:
-            y = int(data[settings["dataset"]][t])
+            y = int(data[settings[DATASET]][t])
         except ValueError:
             continue
 
-        if settings["graphtype"] == "daily":
+        if settings[GRAPHTYPE] == DAILY:
             y_data = np.append(y_data, y - prev_y)
             prev_y = y
         else:
             y_data = np.append(y_data, y)
 
         x_data = np.append(x_data, d)
-    if settings["n_day_av"] > 1:
+    if settings[N_DAY_AV] > 1:
         y_data = get_n_day_av(y_data, settings)
-        x_data = x_data[settings["n_day_av"] -1:]
+        x_data = x_data[settings[N_DAY_AV] -1:]
     return x_data, y_data
 
 
 def get_plot_data(data, settings):
 
-    if settings["dataset"] == POSTESTS:
+    if settings[DATASET] == POSTESTS:
         x_data, y_data = get_pos_tests_data(data, settings)
     else:
         x_data, y_data = get_std_data(data, settings)
@@ -295,27 +317,27 @@ def get_plot_data(data, settings):
     return x_data, y_data
 
 def print_data(data):
-    for d in data["dates"]:
+    for d in data[DATE]:
         print("Entry:")
-        print("date\t" + d)
+        print(DATE + "\t" + d)
         if d in data[TESTS]:
-            print("tests\t" + data[TESTS][d])
+            print(TESTS + "\t" + data[TESTS][d])
         if d in data[POS]:
-            print("pos\t" + data[POS][d])
+            print(POS + "\t" + data[POS][d])
         if d in data[DEATHS]:
-            print("deaths\t" + data[DEATHS][d])
+            print(DEATHS + "\t" + data[DEATHS][d])
         if d in data[RECOV]:
-            print("recov\t" + data[RECOV][d])
+            print(RECOV + "\t" + data[RECOV][d])
         print()
 
 def get_png_name(data):
-    name = data["dataset"]
-    name = name + "_" + data["graphtype"]
-    name = name + "_" + data["yscale"]
-    if not data["n_day_av"] == 1:
-        name = name + "_" + str(data["n_day_av"]) + "_day_av"
-    name = name + "_" + data["x_data"][0].strftime(data["dateformat"])
-    name = name + "_" + data["x_data"][-1].strftime(data["dateformat"])
+    name = data[DATASET]
+    name = name + "_" + data[GRAPHTYPE]
+    name = name + "_" + data[YSCALE]
+    if not data[N_DAY_AV] == 1:
+        name = name + "_" + str(data[N_DAY_AV]) + "_day_av"
+    name = name + "_" + data[X_DATA][0].strftime(data[DATEFORMAT])
+    name = name + "_" + data[X_DATA][-1].strftime(data[DATEFORMAT])
 
     return name
 
@@ -325,7 +347,7 @@ def plot_data(data):
 
     #ax = plt.gca() # get axis
     fig, ax = plt.subplots()
-    formatter = mdates.DateFormatter(data["dateformat"])
+    formatter = mdates.DateFormatter(data[DATEFORMAT])
     ax.xaxis.set_major_formatter(formatter)
 
     #locator = mdates.DayLocator(interval=1)
@@ -333,67 +355,64 @@ def plot_data(data):
 
     ax.xaxis.set_major_locator(locator)
 
-    ax.plot(data["x_data"], data["y_data"]);
-    ax.set_title(data["heading"])
-    ax.set_ylabel(data["y_legend"])
-    ax.set_xlabel(data["x_legend"])
+    ax.plot(data[X_DATA], data[Y_DATA]);
+    ax.set_title(data[HEADING])
+    ax.set_ylabel(data[Y_LEGEND])
+    ax.set_xlabel(data[X_LEGEND])
     ax.grid()
-    ax.set_yscale(data["yscale"])
+    ax.set_yscale(data[YSCALE])
     fig.autofmt_xdate()
     fig.savefig(get_png_name(data))
     #plt.show()
 
 def get_legend_heading(settings):
-    if settings["graphtype"] == "cummulative":
-        first_word = "Cummulative "
-    elif settings["graphtype"] == "daily":
-        first_word = "Daily "
-    else:
-        first_word = ""
+    heading = ""
 
-    if settings["yscale"] == "log":
-        log_note = "\n(Log Graph)"
+    if settings[GRAPHTYPE] == CUMMULATIVE:
+        heading = heading + "Cummulative "
+    elif settings[GRAPHTYPE] == DAILY:
+        heading = heading + "Daily "
     else:
-        log_note = ""
+        print("invalid graph type")
+        return None, None
 
-    if settings["n_day_av"] > 1:
-        av_note = " (" + str(settings["n_day_av"]) +" Day Average)"
-    else:
-        av_note = ""
-
-    if settings["dataset"] == TESTS:
-        heading = first_word + \
-                "Covid-19 Tests Performed to Date in South Africa" + log_note
+    if settings[DATASET] == TESTS:
+        heading = heading + \
+                "Covid-19 Tests Performed to Date in South Africa"
         y_leg = "Tests Performed"
-    elif settings["dataset"] == POS:
-        heading = first_word + \
-                "Covid-19 Confirmed Cases to Date in South Africa" + log_note
+    elif settings[DATASET] == POS:
+        heading = heading + \
+                "Covid-19 Confirmed Cases to Date in South Africa"
         y_leg = "Confirmed Cases"
-    elif settings["dataset"] == POSTESTS:
-        heading = first_word + \
-                "Covid-19 proportion of Tests Positive to Date in South Africa" \
-                + log_note
+    elif settings[DATASET] == POSTESTS:
+        heading = heading + \
+                "Covid-19 proportion of Tests Positive to Date in South Africa" 
         y_leg = "Proportion Positive"
-    elif settings["dataset"] == DEATHS:
-        heading = first_word + \
-                "Covid-19 Confirmed Deaths to Date in South Africa" + log_note
+    elif settings[DATASET] == DEATHS:
+        heading = heading + \
+                "Covid-19 Confirmed Deaths to Date in South Africa"
         y_leg = "Confirmed Deaths"
-    elif settings["dataset"] == RECOV:
-        heading = first_word + \
-                "Covid-19 Confirmed Recoveries to Date in South Africa" + \
-                log_note
+    elif settings[DATASET] == RECOV:
+        heading = heading + \
+                "Covid-19 Confirmed Recoveries to Date in South Africa"
         y_leg = "Confirmed Recoveries"
     else:
         print("please give valid plotting data")
         return None, None
-    y_leg = y_leg + av_note
+
+    if settings[YSCALE] == LOG:
+        heading  = heading + "\n(Log Graph)"
+
+    if settings[N_DAY_AV] > 1:
+        y_leg = y_leg + " (" + str(settings[N_DAY_AV]) +" Day Average)"
+
     return y_leg, heading
 
 ### Main Function ##############################################################
 
 if __name__ == "__main__":
     settings = parse_args(sys.argv)
-    data = parse_data(settings["filename"])
+    data = parse_data(settings[FILENAME])
 
     y_leg, heading = get_legend_heading(settings)
     if y_leg == None or heading == None:
@@ -407,19 +426,19 @@ if __name__ == "__main__":
     x_data = sorted(x_data)
 
     p_data = {}
-    p_data["x_data"] = x_data
-    p_data["y_data"] = y_data
-    p_data["x_legend"] = x_leg
-    p_data["y_legend"] = y_leg
-    p_data["heading"] = heading
-    p_data["yscale"] = settings["yscale"]
-    p_data["dataset"] = settings["dataset"]
-    p_data["graphtype"] = settings["graphtype"]
-    p_data["n_day_av"] = settings["n_day_av"]
-    p_data["start_date"] = settings["start_date"]
-    p_data["end_date"] = settings["end_date"]
+    p_data[X_DATA] = x_data
+    p_data[Y_DATA] = y_data
+    p_data[X_LEGEND] = x_leg
+    p_data[Y_LEGEND] = y_leg
+    p_data[HEADING] = heading
+    p_data[YSCALE] = settings[YSCALE]
+    p_data[DATASET] = settings[DATASET]
+    p_data[GRAPHTYPE] = settings[GRAPHTYPE]
+    p_data[N_DAY_AV] = settings[N_DAY_AV]
+    p_data[START_DATE] = settings[START_DATE]
+    p_data[END_DATE] = settings[END_DATE]
 
-    p_data["dateformat"] = "%Y-%m-%d"
+    p_data[DATEFORMAT] = DFORMAT_YEAR_FRST
 
 
     plot_data(p_data)
