@@ -480,3 +480,11 @@ tests	460873
 pos	15515
 deaths	264
 recov	7006
+
+Entry:
+date	18-05-2020
+tests	475071
+pos	16433
+deaths	286
+recov	7298
+
