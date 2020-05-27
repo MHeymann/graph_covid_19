@@ -522,3 +522,23 @@ tests	564370
 pos	21343
 deaths	407
 recov	10104
+
+Entry:
+date	24-05-2020
+tests	583855
+pos	22583
+deaths	429
+recov	11100
+
+date	25-05-2020
+tests	596777
+pos	23615
+deaths	481
+recov	11917
+
+date	26-05-2020
+tests	605991
+pos	24264
+deaths	524
+recov	12741
+

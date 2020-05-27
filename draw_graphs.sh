@@ -1,6 +1,7 @@
 #! /bin/bash
 
 ./graph_stats.py dataset=pos
+./graph_stats.py dataset=pos yscale=linear graphtype=daily
 ./graph_stats.py dataset=tests
 ./graph_stats.py dataset=tests yscale=linear graphtype=daily
 ./graph_stats.py dataset=deaths
