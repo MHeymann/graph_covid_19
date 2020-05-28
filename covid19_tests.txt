@@ -542,3 +542,9 @@ pos	24264
 deaths	524
 recov	12741
 
+date	27-05-2020
+tests	634996
+pos	25937
+deaths	552
+recov	13451
+
