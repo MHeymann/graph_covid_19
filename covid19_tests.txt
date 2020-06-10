@@ -1,11 +1,4 @@
 Entry:
-date	xx-xx-xxxx
-tests	x
-pos	x
-deaths	x
-recov	x
-
-Entry:
 date	5-03-2020
 tests	x
 pos	1
@@ -543,34 +536,34 @@ deaths	524
 recov	12741
 
 date	27-05-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	634996
+pos	25937
+deaths	552
+recov	13451
 
 date	28-05-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	655723
+pos	27403
+deaths	577
+recov	14370
 
 date	29-05-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	680175
+pos	29240
+deaths	611
+recov	15093
 
 date	30-05-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	701883
+pos	30967
+deaths	643
+recov	16116
 
 date	31-05-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	725125
+pos	32683
+deaths	683
+recov	16809
 
 date	01-06-2020
 tests	x
