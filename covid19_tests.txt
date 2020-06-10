@@ -566,58 +566,58 @@ deaths	683
 recov	16809
 
 date	01-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	742742
+pos	34357
+deaths	705
+recov	17291
 
 date	02-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	761534
+pos	35812
+deaths	755
+recov	18313
 
 date	03-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	785979
+pos	37525
+deaths	792
+recov	19682
 
 date	04-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	820675
+pos	40792
+deaths	848
+recov	21311
 
 date	05-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	850871
+pos	43434
+deaths	908
+recov	23088
 
 date	06-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	891668
+pos	45973
+deaths	952
+recov	24258
 
 date	07-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	920064
+pos	48285
+deaths	998
+recov	24364
 
 date	08-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	943059
+pos	50879
+deaths	1080
+recov	26099
 
 date	09-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	968070
+pos	52991
+deaths	1162
+recov	29006
 
 date	10-06-2020
 tests	x
