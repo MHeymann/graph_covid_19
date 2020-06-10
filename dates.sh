@@ -1,11 +1,59 @@
 #! /bin/bash
 
 startdate=2020-03-15
-enddate=2020-05-20
+enddate=$( date +%Y-%m-%d )
 
-curr="$startdate"
+curr=$( date +%Y-%m-%d --date "$startdate -1 day" )
 while true; do
-    echo "$curr"
-    [ "$curr" \< "$enddate" ] || break
     curr=$( date +%Y-%m-%d --date "$curr +1 day" )
+    echo "$curr"
+    echo ./graph_stats.py dataset=pos \
+	    end_date=$curr
+    ./graph_stats.py dataset=pos \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=pos yscale=linear graphtype=daily \
+	    end_date=$curr
+    ./graph_stats.py dataset=pos yscale=linear graphtype=daily \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=tests \
+	    end_date=$curr
+    ./graph_stats.py dataset=tests \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=tests yscale=linear graphtype=daily \
+	    end_date=$curr
+    ./graph_stats.py dataset=tests yscale=linear graphtype=daily \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=deaths \
+	    end_date=$curr
+    ./graph_stats.py dataset=deaths \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=deaths yscale=linear \
+	    end_date=$curr
+    ./graph_stats.py dataset=deaths yscale=linear \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=deaths yscale=linear graphtype=daily \
+	    end_date=$curr
+    ./graph_stats.py dataset=deaths yscale=linear graphtype=daily \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=recov yscale=linear graphtype=daily n_day_av=3 \
+	    end_date=$curr
+    ./graph_stats.py dataset=recov yscale=linear graphtype=daily n_day_av=3 \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=postests yscale=linear \
+	    end_date=$curr
+    ./graph_stats.py dataset=postests yscale=linear \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=postests yscale=linear graphtype=daily \
+	    end_date=$curr
+    ./graph_stats.py dataset=postests yscale=linear graphtype=daily \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=postests yscale=linear graphtype=daily n_day_av=3 \
+	    end_date=$curr
+    ./graph_stats.py dataset=postests yscale=linear graphtype=daily n_day_av=3 \
+	    end_date=$curr
+    echo ./graph_stats.py dataset=active yscale=linear \
+	    end_date=$curr
+    ./graph_stats.py dataset=active yscale=linear \
+	    end_date=$curr
+    [ "$curr" \< "$enddate" ] || break
 done

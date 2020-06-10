@@ -192,6 +192,8 @@ def get_n_day_av(data, settings):
                 print("bad value in data")
                 continue
             n = n + 1
+        if n == 0:
+            n = 1
         ret_data = np.array([sum / n])
     else:
         vals = np.zeros(settings[N_DAY_AV])
@@ -224,10 +226,10 @@ def convert_date(sdate):
 
 def is_date_valid_range(date, settings):
     if (not settings[START_DATE] == None) and \
-            (d < settings[START_DATE]):
+            (date < settings[START_DATE]):
         return False
     if (not settings[END_DATE] == None) and \
-            (d > settings[END_DATE]):
+            (date > settings[END_DATE]):
         return False
     return True
 
