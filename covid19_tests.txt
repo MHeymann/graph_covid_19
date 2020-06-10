@@ -543,8 +543,92 @@ deaths	524
 recov	12741
 
 date	27-05-2020
-tests	634996
-pos	25937
-deaths	552
-recov	13451
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	28-05-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	29-05-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	30-05-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	31-05-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	01-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	02-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	03-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	04-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	05-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	06-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	07-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	08-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	09-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
+
+date	10-06-2020
+tests	x
+pos	x
+deaths	x
+recov	x
 

@@ -98,7 +98,7 @@ def check_n_day_av(arg):
 
 def check_date_arg(arg):
     try:
-        datetime.datetime.strptime(arg, DFORMAT_YEAR_LST).date()
+        datetime.datetime.strptime(arg, DFORMAT_YEAR_FRST).date()
     except ValueError:
         print("Bad date format")
         return False
@@ -126,10 +126,10 @@ def parse_args(argv):
                 settings[N_DAY_AV] = 1
         elif arg[0] == START_DATE and check_date_arg(arg[1]):
             settings[START_DATE] = \
-                    datetime.datetime.strptime(arg[1], DFORMAT_YEAR_LST).date()
+                    datetime.datetime.strptime(arg[1], DFORMAT_YEAR_FRST).date()
         elif arg[0] == END_DATE and check_date_arg(arg[1]):
             settings[END_DATE] = \
-                    datetime.datetime.strptime(arg[1], DFORMAT_YEAR_LST).date()
+                    datetime.datetime.strptime(arg[1], DFORMAT_YEAR_FRST).date()
 
         i = i + 1
 
@@ -269,9 +269,13 @@ def get_pos_tests_data(data, settings):
         x_data = np.append(x_data, d)
 
     if settings[N_DAY_AV] > 1:
+        if settings[N_DAY_AV] > len(pos_data):
+            n = len(pos_data)
+        else:
+            n = settings[N_DAY_AV]
         pos_data = get_n_day_av(pos_data, settings)
         tst_data = get_n_day_av(tst_data, settings)
-        x_data = x_data[settings[N_DAY_AV] -1:]
+        x_data = x_data[n -1:]
     return x_data, pos_data / tst_data
 
 def get_active_data(data, settings):
@@ -312,8 +316,12 @@ def get_active_data(data, settings):
 
         x_data = np.append(x_data, d)
     if settings[N_DAY_AV] > 1:
+        if settings[N_DAY_AV] > len(y_data):
+            n = len(y_data)
+        else:
+            n = settings[N_DAY_AV]
         y_data = get_n_day_av(y_data, settings)
-        x_data = x_data[settings[N_DAY_AV] -1:]
+        x_data = x_data[n -1:]
     return x_data, y_data
 
 
@@ -346,8 +354,12 @@ def get_std_data(data, settings):
 
         x_data = np.append(x_data, d)
     if settings[N_DAY_AV] > 1:
+        if settings[N_DAY_AV] > len(y_data):
+            n = len(y_data)
+        else:
+            n = settings[N_DAY_AV]
         y_data = get_n_day_av(y_data, settings)
-        x_data = x_data[settings[N_DAY_AV] -1:]
+        x_data = x_data[n -1:]
     return x_data, y_data
 
 
