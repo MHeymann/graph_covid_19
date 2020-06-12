@@ -523,105 +523,135 @@ pos	22583
 deaths	429
 recov	11100
 
+Entry:
 date	25-05-2020
 tests	596777
 pos	23615
 deaths	481
 recov	11917
 
+Entry:
 date	26-05-2020
 tests	605991
 pos	24264
 deaths	524
 recov	12741
 
+Entry:
 date	27-05-2020
 tests	634996
 pos	25937
 deaths	552
 recov	13451
 
+Entry:
 date	28-05-2020
 tests	655723
 pos	27403
 deaths	577
 recov	14370
 
+Entry:
 date	29-05-2020
 tests	680175
 pos	29240
 deaths	611
 recov	15093
 
+Entry:
 date	30-05-2020
 tests	701883
 pos	30967
 deaths	643
 recov	16116
 
+Entry:
 date	31-05-2020
 tests	725125
 pos	32683
 deaths	683
 recov	16809
 
+Entry:
 date	01-06-2020
 tests	742742
 pos	34357
 deaths	705
 recov	17291
 
+Entry:
 date	02-06-2020
 tests	761534
 pos	35812
 deaths	755
 recov	18313
 
+Entry:
 date	03-06-2020
 tests	785979
 pos	37525
 deaths	792
 recov	19682
 
+Entry:
 date	04-06-2020
 tests	820675
 pos	40792
 deaths	848
 recov	21311
 
+Entry:
 date	05-06-2020
 tests	850871
 pos	43434
 deaths	908
 recov	23088
 
+Entry:
 date	06-06-2020
 tests	891668
 pos	45973
 deaths	952
 recov	24258
 
+Entry:
 date	07-06-2020
 tests	920064
 pos	48285
 deaths	998
 recov	24364
 
+Entry:
 date	08-06-2020
 tests	943059
 pos	50879
 deaths	1080
 recov	26099
 
+Entry:
 date	09-06-2020
 tests	968070
 pos	52991
 deaths	1162
 recov	29006
 
+Entry:
 date	10-06-2020
+tests	998400
+pos	55421
+deaths	1210
+recov	31505
+
+Entry:
+date	11-06-2020
+tests	1028399
+pos	58568
+deaths	1284
+recov	33252
+
+Entry:
+date	12-06-2020
 tests	x
 pos	x
 deaths	x
 recov	x
-
