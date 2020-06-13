@@ -157,16 +157,16 @@ def parse_data(filename):
                     dates = np.append(dates, curr_date)
             elif (data[0].strip() == TESTS):
                 if not curr_date == "":
-                    tests[curr_date] = data[1].strip()
+                    tests[curr_date] = data[1].replace(" ", "")
             elif (data[0].strip() == POS):
                 if not curr_date == "":
-                    posit[curr_date] = data[1].strip()
+                    posit[curr_date] = data[1].replace(" ", "")
             elif (data[0].strip() == DEATHS):
                 if not curr_date == "":
-                    deaths[curr_date] = data[1].strip()
+                    deaths[curr_date] = data[1].replace(" ", "")
             elif (data[0].strip() == RECOV):
                 if not curr_date == "":
-                    recov[curr_date] = data[1].strip()
+                    recov[curr_date] = data[1].replace(" ", "")
             line = f.readline()
     ret_data = {}
     ret_data[DATE] = dates
@@ -217,8 +217,10 @@ def convert_date(sdate):
     try:
         # check date format
         d = datetime.datetime.strptime(sdate, DFORMAT_YEAR_LST).date()
-    except ValueError:
+    except ValueError as e:
+        print(e)
         print("bad date format")
+        print(DFORMAT_YEAR_LST)
         print(sdate)
         return None
     return d
@@ -254,7 +256,9 @@ def get_pos_tests_data(data, settings):
         try:
             tsts = int(data[TESTS][t])
             pos = int(data[POS][t])
-        except ValueError:
+        except ValueError as e:
+            print("ValueError")
+            print(e)
             continue
 
         if settings[GRAPHTYPE] == DAILY:
@@ -299,7 +303,9 @@ def get_active_data(data, settings):
         try:
             recov = int(data[RECOV][t])
             pos = int(data[POS][t])
-        except ValueError:
+        except ValueError as e:
+            print("ValueError")
+            print(e)
             continue
 
         active = pos - recov
@@ -345,7 +351,9 @@ def get_std_data(data, settings):
             continue
         try:
             y = int(data[settings[DATASET]][t])
-        except ValueError:
+        except ValueError as e:
+            print("ValueError")
+            print(e)
             continue
 
         if settings[GRAPHTYPE] == DAILY:
@@ -411,7 +419,7 @@ def plot_data(data):
     ax.xaxis.set_major_formatter(formatter)
 
     #locator = mdates.DayLocator(interval=1)
-    locator = mdates.WeekdayLocator(byweekday=mdates.MO)
+    locator = mdates.WeekdayLocator(byweekday=mdates.MO, interval=2)
 
     ax.xaxis.set_major_locator(locator)
 
@@ -493,20 +501,12 @@ if __name__ == "__main__":
     y_data = [y for _,y in sorted(zip(x_data, y_data))]
     x_data = sorted(x_data)
 
-    p_data = {}
-    p_data[X_DATA] = x_data
-    p_data[Y_DATA] = y_data
-    p_data[X_LEGEND] = x_leg
-    p_data[Y_LEGEND] = y_leg
-    p_data[HEADING] = heading
-    p_data[YSCALE] = settings[YSCALE]
-    p_data[DATASET] = settings[DATASET]
-    p_data[GRAPHTYPE] = settings[GRAPHTYPE]
-    p_data[N_DAY_AV] = settings[N_DAY_AV]
-    p_data[START_DATE] = settings[START_DATE]
-    p_data[END_DATE] = settings[END_DATE]
+    settings[X_DATA] = x_data
+    settings[Y_DATA] = y_data
+    settings[X_LEGEND] = x_leg
+    settings[Y_LEGEND] = y_leg
+    settings[HEADING] = heading
 
-    p_data[DATEFORMAT] = DFORMAT_YEAR_FRST
+    settings[DATEFORMAT] = DFORMAT_YEAR_FRST
 
-
-    plot_data(p_data)
+    plot_data(settings)

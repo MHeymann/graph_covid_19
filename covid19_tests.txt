@@ -651,7 +651,7 @@ recov	33252
 
 Entry:
 date	12-06-2020
-tests	x
-pos	x
-deaths	x
-recov	x
+tests	1060 425
+pos	61 927
+deaths	1 354
+recov	35 008
