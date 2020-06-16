@@ -1,4 +1,4 @@
-#! /bin/bash
+# /bin/bash
 
 ./graph_stats.py dataset=pos
 ./graph_stats.py dataset=pos yscale=linear graphtype=daily

@@ -1,36 +1,30 @@
 Entry:
 date	5-03-2020
-tests	x
 pos	1
 deaths	0
 
 Entry:
 date	6-03-2020
-tests	x
 pos	1
 deaths	0
 
 Entry:
 date	7-03-2020
-tests	x
 pos	2
 deaths	0
 
 Entry:
 date	8-03-2020
-tests	x
 pos	3
 deaths	0
 
 Entry:
 date	9-03-2020
-tests	x
 pos	7
 deaths	0
 
 Entry:
 date	10-03-2020
-tests	x
 pos	10
 deaths	0
 
@@ -120,7 +114,6 @@ deaths	0
 
 Entry:
 date	25-03-2020
-tests	???
 pos	709
 deaths	0
 
@@ -200,7 +193,6 @@ deaths	12
 
 Entry:
 date	07-04-2020
-tests	???
 pos	1749
 deaths	13
 
@@ -651,7 +643,29 @@ recov	33252
 
 Entry:
 date	12-06-2020
-tests	1060 425
+tests	1 060 425
 pos	61 927
 deaths	1 354
 recov	35 008
+
+Entry:
+date	13-06-2020
+tests	1 087 887
+pos	65 736
+deaths	1 423
+recov	36 850
+
+Entry:
+date	14-06-2020
+tests	1 121 958
+pos	70 038
+deaths	1 480
+recov	38 531
+
+Entry:
+date	15-06-2020
+tests	1 146 857
+pos	73 533
+deaths	1 568
+recov	39 867
+

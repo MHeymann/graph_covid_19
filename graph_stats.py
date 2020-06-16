@@ -430,7 +430,9 @@ def plot_data(data):
     ax.grid()
     ax.set_yscale(data[YSCALE])
     fig.autofmt_xdate()
-    fig.savefig(get_png_name(data))
+    gname = get_png_name(data)
+    print("saving graph as " + gname + ".png")
+    fig.savefig(gname)
     #plt.show()
 
 def get_legend_heading(settings):
