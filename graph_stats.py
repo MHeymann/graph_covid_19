@@ -17,6 +17,7 @@ POSTESTS = "postests"
 RECOV = "recov"
 DEATHS = "deaths"
 ACTIVE = "active"
+PROPREC = "proprec"
 
 GRAPHTYPE = "graphtype"
 YSCALE = "yscale"
@@ -38,7 +39,7 @@ X_LEGEND = "x_legend"
 Y_LEGEND = "y_legend"
 HEADING = "heading"
 
-DATA_SETS = np.array([POS, TESTS, RECOV, DEATHS, POSTESTS, ACTIVE])
+DATA_SETS = np.array([POS, TESTS, RECOV, DEATHS, POSTESTS, ACTIVE, PROPREC])
 GRAPHTYPE_OPTS = np.array([TOTAL, DAILY])
 YSCALE_OPTS = np.array([LOG, LINEAR])
 
@@ -225,7 +226,6 @@ def convert_date(sdate):
         return None
     return d
 
-
 def is_date_valid_range(date, settings):
     if (not settings[START_DATE] == None) and \
             (date < settings[START_DATE]):
@@ -235,13 +235,13 @@ def is_date_valid_range(date, settings):
         return False
     return True
 
-def get_pos_tests_data(data, settings):
+def get_prop_data(data, set1, set2, settings):
     x_data =  np.array([])
-    pos_data =  np.array([])
-    tst_data =  np.array([])
+    data_1 =  np.array([])
+    data_2 =  np.array([])
 
-    prev_tsts = 0
-    prev_pos = 0
+    prev_2 = 0
+    prev_1 = 0
 
     for t in data[DATE]:
         d = convert_date(t)
@@ -251,38 +251,39 @@ def get_pos_tests_data(data, settings):
         if not is_date_valid_range(d, settings):
             continue
 
-        if not t in data[POS] or not t in data[TESTS]:
+        if not t in data[set1] or not t in data[set2]:
             continue
+
         try:
-            tsts = int(data[TESTS][t])
-            pos = int(data[POS][t])
+            point_2 = int(data[set2][t])
+            point_1 = int(data[set1][t])
         except ValueError as e:
             print("ValueError")
             print(e)
             continue
 
         if settings[GRAPHTYPE] == DAILY:
-            cur_pos = pos
-            cur_tst = tsts
-            pos = pos - prev_pos
-            tsts = tsts - prev_tsts
-            prev_pos = cur_pos
-            prev_tsts = cur_tst
-        if tsts == 0:
+            cur_1 = point_1
+            cur_2 = point_2
+            point_1 = point_1 - prev_1
+            point_2 = point_2 - prev_2
+            prev_1 = cur_1
+            prev_2 = cur_2
+        if point_2 == 0:
             continue
-        pos_data = np.append(pos_data, pos)
-        tst_data = np.append(tst_data, tsts)
+        data_1 = np.append(data_1, point_1)
+        data_2 = np.append(data_2, point_2)
         x_data = np.append(x_data, d)
 
     if settings[N_DAY_AV] > 1:
-        if settings[N_DAY_AV] > len(pos_data):
-            n = len(pos_data)
+        if settings[N_DAY_AV] > len(data_1):
+            n = len(data_1)
         else:
             n = settings[N_DAY_AV]
-        pos_data = get_n_day_av(pos_data, settings)
-        tst_data = get_n_day_av(tst_data, settings)
+        data_1 = get_n_day_av(data_1, settings)
+        data_2 = get_n_day_av(data_2, settings)
         x_data = x_data[n -1:]
-    return x_data, pos_data / tst_data
+    return x_data, data_1 / data_2
 
 def get_active_data(data, settings):
     x_data =  np.array([])
@@ -376,9 +377,11 @@ def get_std_data(data, settings):
 def get_plot_data(data, settings):
 
     if settings[DATASET] == POSTESTS:
-        x_data, y_data = get_pos_tests_data(data, settings)
+        x_data, y_data = get_prop_data(data, POS, TESTS, settings)
     elif settings[DATASET] == ACTIVE:
         x_data, y_data = get_active_data(data, settings)
+    elif settings[DATASET] == PROPREC:
+        x_data, y_data = get_prop_data(data, RECOV, POS, settings)
     else:
         x_data, y_data = get_std_data(data, settings)
 
@@ -456,8 +459,12 @@ def get_legend_heading(settings):
         y_leg = "Confirmed Cases"
     elif settings[DATASET] == POSTESTS:
         heading = heading + \
-                "Covid-19 proportion of Tests Positive in South Africa"
+                "Covid-19 Proportion of Tests Positive in South Africa"
         y_leg = "Proportion Positive"
+    elif settings[DATASET] == PROPREC:
+        heading = heading + \
+                "Covid-19 Proportion of Positive Cases Recovered\nin South Africa"
+        y_leg = "Proportion Recovered"
     elif settings[DATASET] == ACTIVE:
         if settings[GRAPHTYPE] == DAILY:
             heading = "Daily change in "

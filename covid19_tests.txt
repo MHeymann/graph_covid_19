@@ -669,3 +669,51 @@ pos	73 533
 deaths	1 568
 recov	39 867
 
+Entry:
+date	16-06-2020
+tests	1 172 513
+pos	76 334
+deaths	1 625
+recov	42 063
+
+Entry:
+date	17-06-2020
+tests	1 200 736
+pos	80 412
+deaths	1 674
+recov	44 331
+
+Entry:
+date	18-06-2020
+tests	1 228 098
+pos	83 890
+deaths	1 737
+recov	44 920
+
+Entry:
+date	19-06-2020
+tests	1 260 434
+pos	87 715
+deaths	1 831
+recov	47 825
+
+Entry:
+date	20-06-2020
+tests	1 293 608
+pos	92 681
+deaths	1 877
+recov	50 326
+
+Entry:
+date	21-06-2020
+tests	1 328 060
+pos	97 302
+deaths	1 930
+recov	51 608
+
+Entry:
+date	22-06-2020
+pos	101 590
+tests	1 353 176
+deaths	1 991
+recov	53 444

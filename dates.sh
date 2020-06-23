@@ -1,12 +1,12 @@
 #! /bin/bash
 
-startdate=2020-03-15
+startdate=2020-06-15
 enddate=$( date +%Y-%m-%d )
 
-#curr=$( date +%Y-%m-%d --date "$startdate -1 day" )
-curr=$( date +%Y-%m-%d --date "$( date +%Y-%m-%d ) -1 day" )
-curr=$( date +%Y-%m-%d --date "$curr -1 day" )
-curr=$( date +%Y-%m-%d --date "$curr -1 day" )
+curr=$( date +%Y-%m-%d --date "$startdate -1 day" )
+#curr=$( date +%Y-%m-%d --date "$( date +%Y-%m-%d ) -1 day" )
+#curr=$( date +%Y-%m-%d --date "$curr -1 day" )
+#curr=$( date +%Y-%m-%d --date "$curr -1 day" )
 while true; do
     curr=$( date +%Y-%m-%d --date "$curr +1 day" )
     echo "$curr"
