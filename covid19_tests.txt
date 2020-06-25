@@ -717,3 +717,24 @@ pos	101 590
 tests	1 353 176
 deaths	1 991
 recov	53 444
+
+Entry:
+date	23-06-2020
+pos	106 108
+tests	1 382 772
+deaths	2 102
+recov	55 045
+
+Entry:
+date	24-06-2020
+pos	111 796
+tests	1 416 894
+deaths	2 205
+recov	56 874
+
+# Entry:
+# date	25-06-2020
+# pos	1xx xxx
+# tests	1 xxx xxx
+# deaths	2 xxx
+# recov	5x xxx

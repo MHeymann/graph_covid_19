@@ -1,6 +1,6 @@
 #! /bin/bash
 
-startdate=2020-06-15
+startdate=2020-06-22
 enddate=$( date +%Y-%m-%d )
 
 curr=$( date +%Y-%m-%d --date "$startdate -1 day" )
@@ -57,6 +57,8 @@ while true; do
     echo ./graph_stats.py dataset=active yscale=linear \
 	    end_date=$curr
     ./graph_stats.py dataset=active yscale=linear \
+	    end_date=$curr
+    ./graph_stats.py dataset=proprec yscale=linear \
 	    end_date=$curr
     [ "$curr" \< "$enddate" ] || break
 done

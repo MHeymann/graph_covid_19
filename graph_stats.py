@@ -148,7 +148,7 @@ def parse_data(filename):
     curr_date = ""
     with open (filename, "r") as f:
         line = f.readline()
-        while not line == "":
+        while not line == "" and not line[0] == "#":
             data = line.split("\t")
             if (data[0].strip() == "Entry:"):
                 curr_date = ""
@@ -462,7 +462,7 @@ def get_legend_heading(settings):
                 "Covid-19 Proportion of Tests Positive in South Africa"
         y_leg = "Proportion Positive"
     elif settings[DATASET] == PROPREC:
-        heading = heading + \
+        heading = \
                 "Covid-19 Proportion of Positive Cases Recovered\nin South Africa"
         y_leg = "Proportion Recovered"
     elif settings[DATASET] == ACTIVE:

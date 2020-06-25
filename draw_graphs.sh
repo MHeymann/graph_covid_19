@@ -12,3 +12,5 @@
 ./graph_stats.py dataset=postests yscale=linear graphtype=daily
 ./graph_stats.py dataset=postests yscale=linear graphtype=daily n_day_av=3
 ./graph_stats.py dataset=active yscale=linear
+./graph_stats.py dataset=proprec yscale=linear
+
