@@ -1,6 +1,6 @@
 #! /bin/bash
 
-startdate=2020-06-22
+startdate=2020-06-26
 enddate=$( date +%Y-%m-%d )
 
 curr=$( date +%Y-%m-%d --date "$startdate -1 day" )
