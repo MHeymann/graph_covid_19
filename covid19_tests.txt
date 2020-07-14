@@ -822,3 +822,52 @@ pos	215 855
 tests	1 907 532
 deaths	3 502
 recov	102 299
+
+Entry:
+date	08-07-2020
+pos	224 665
+tests	1 944 399
+deaths	3 602
+recov	106 842
+
+Entry:
+date	09-07-2020
+pos	238 339
+tests	2 000 569
+deaths	3 720
+recov	113 061
+
+Entry:
+date	10-07-2020
+pos	250 687
+tests	2 057 232
+deaths	3 860
+recov	118 232
+
+Entry:
+date	11-07-2020
+pos	264 184
+tests	2 108 570
+deaths	3 971
+recov	127 715
+
+Entry:
+date	12-07-2020
+pos	276 242
+tests	2 154 391
+deaths	4 079
+recov	134 874
+
+Entry:
+date	13-07-2020
+pos	287 796
+tests	2 194 624
+deaths	4 172
+recov	138 241
+
+# Entry:
+# date	14-07-2020
+# pos	2xx xxx
+# tests	2 xxx xxx
+# deaths	4 xxx
+# recov	1xx xxx
