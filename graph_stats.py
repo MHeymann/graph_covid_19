@@ -39,6 +39,30 @@ X_LEGEND = "x_legend"
 Y_LEGEND = "y_legend"
 HEADING = "heading"
 
+
+RSA = "rsa"
+WC = "wc"
+NC = "nc"
+EC = "ec"
+FS = "fs"
+KZN = "kzn"
+GP = "gp"
+LP = "lp"
+NW = "nw"
+MP = "mp"
+
+REGIONS = {"rsa": "South Africa", \
+           "wc": "the Western Cape", \
+           "nc": "the Northern Cape", \
+           "ec": "the Eastern Cape", \
+           "fs": "the Freestate", \
+           "kzn": "Kwazulu-Natal", \
+           "gp": "Gauteng", \
+           "lp": "Limpopo", \
+           "nw": "North-West", \
+           "mp": "Mpumalanga"}
+GRAPH_REG = "graph_reg"
+
 DATA_SETS = np.array([POS, TESTS, RECOV, DEATHS, POSTESTS, ACTIVE, PROPREC])
 GRAPHTYPE_OPTS = np.array([TOTAL, DAILY])
 YSCALE_OPTS = np.array([LOG, LINEAR])
@@ -59,7 +83,7 @@ def get_default_settings():
     settings[N_DAY_AV] = 1
     settings[START_DATE] = None
     settings[END_DATE] = None
-
+    settings[GRAPH_REG] = RSA
 
     return settings
 
@@ -82,6 +106,13 @@ def check_graph_data_set(arg):
 def check_source_filename(arg):
     if not os.path.exists() or not os.path.isfile():
         print("Not a valid file: " + arg)
+        return False
+    else:
+        return True
+
+def check_region_name(arg):
+    if not arg in REGIONS:
+        print("Not a valid region argument: " + arg)
         return False
     else:
         return True
@@ -119,6 +150,8 @@ def parse_args(argv):
             settings[DATASET] = arg[1]
         elif arg[0] == FILENAME and check_source_filename(arg[1]):
             settings[FILENAME] = arg[1]
+        elif arg[0] == GRAPH_REG and check_region_name(arg[1]):
+            settings[GRAPH_REG] = arg[1]
         elif arg[0] == N_DAY_AV and check_n_day_av(arg[1]):
             try:
                 settings[N_DAY_AV] = int(arg[1])
@@ -140,34 +173,45 @@ def parse_args(argv):
 
 def parse_data(filename):
     dates = np.array([])
-    tests = {}
-    posit = {}
-    deaths = {}
-    recov = {}
+    tests = {RSA: {}, WC: {}, NC: {}, EC: {}, FS: {}, KZN: {}, GP: {}, \
+            LP: {}, NW: {}, MP: {}}
+    posit = {RSA: {}, WC: {}, NC: {}, EC: {}, FS: {}, KZN: {}, GP: {}, \
+            LP: {}, NW: {}, MP: {}}
+    deaths = {RSA: {}, WC: {}, NC: {}, EC: {}, FS: {}, KZN: {}, GP: {}, \
+            LP: {}, NW: {}, MP: {}}
+    recov = {RSA: {}, WC: {}, NC: {}, EC: {}, FS: {}, KZN: {}, GP: {}, \
+            LP: {}, NW: {}, MP: {}}
 
     curr_date = ""
     with open (filename, "r") as f:
         line = f.readline()
         while not line == "" and not line[0] == "#":
             data = line.split("\t")
-            if (data[0].strip() == "Entry:"):
+            if data[0] in REGIONS:
+                i = 1
+                reg = data[0]
+            else:
+                i = 0
+                reg = RSA
+
+            if (data[i].strip() == "Entry:"):
                 curr_date = ""
-            if data[0].strip() == DATE:
+            if data[i].strip() == DATE:
                 curr_date = data[1].strip()
                 if not curr_date == "":
                     dates = np.append(dates, curr_date)
-            elif (data[0].strip() == TESTS):
+            elif (data[i].strip() == TESTS):
                 if not curr_date == "":
-                    tests[curr_date] = data[1].replace(" ", "")
-            elif (data[0].strip() == POS):
+                    tests[reg][curr_date] = data[i+1].replace(" ", "")
+            elif (data[i].strip() == POS):
                 if not curr_date == "":
-                    posit[curr_date] = data[1].replace(" ", "")
-            elif (data[0].strip() == DEATHS):
+                    posit[reg][curr_date] = data[i+1].replace(" ", "")
+            elif (data[i].strip() == DEATHS):
                 if not curr_date == "":
-                    deaths[curr_date] = data[1].replace(" ", "")
-            elif (data[0].strip() == RECOV):
+                    deaths[reg][curr_date] = data[i+1].replace(" ", "")
+            elif (data[i].strip() == RECOV):
                 if not curr_date == "":
-                    recov[curr_date] = data[1].replace(" ", "")
+                    recov[reg][curr_date] = data[i+1].replace(" ", "")
             line = f.readline()
     ret_data = {}
     ret_data[DATE] = dates
@@ -239,6 +283,7 @@ def get_prop_data(data, set1, set2, settings):
     x_data =  np.array([])
     data_1 =  np.array([])
     data_2 =  np.array([])
+    region = settings[GRAPH_REG]
 
     prev_2 = 0
     prev_1 = 0
@@ -251,12 +296,12 @@ def get_prop_data(data, set1, set2, settings):
         if not is_date_valid_range(d, settings):
             continue
 
-        if not t in data[set1] or not t in data[set2]:
+        if not t in data[set1][region] or not t in data[set2][region]:
             continue
 
         try:
-            point_2 = int(data[set2][t])
-            point_1 = int(data[set1][t])
+            point_2 = int(data[set2][region][t])
+            point_1 = int(data[set1][region][t])
         except ValueError as e:
             print("ValueError")
             print(e)
@@ -288,6 +333,7 @@ def get_prop_data(data, set1, set2, settings):
 def get_active_data(data, settings):
     x_data =  np.array([])
     y_data =  np.array([])
+    region = settings[GRAPH_REG]
 
     prev_active = -1
 
@@ -299,11 +345,11 @@ def get_active_data(data, settings):
         if not is_date_valid_range(d, settings):
             continue
 
-        if not t in data[POS] or not t in data[RECOV]:
+        if not t in data[POS][region] or not t in data[RECOV][region]:
             continue
         try:
-            recov = int(data[RECOV][t])
-            pos = int(data[POS][t])
+            recov = int(data[RECOV][region][t])
+            pos = int(data[POS][region][t])
         except ValueError as e:
             print("ValueError")
             print(e)
@@ -337,6 +383,7 @@ def get_active_data(data, settings):
 def get_std_data(data, settings):
     x_data =  np.array([])
     y_data =  np.array([])
+    region = settings[GRAPH_REG]
 
     prev_y = 0
 
@@ -348,10 +395,10 @@ def get_std_data(data, settings):
         if not is_date_valid_range(d, settings):
             continue
 
-        if not t in data[settings[DATASET]]:
+        if not t in data[settings[DATASET]][region]:
             continue
         try:
-            y = int(data[settings[DATASET]][t])
+            y = int(data[settings[DATASET]][region][t])
         except ValueError as e:
             print("ValueError")
             print(e)
@@ -391,18 +438,19 @@ def print_data(data):
     for d in data[DATE]:
         print("Entry:")
         print(DATE + "\t" + d)
-        if d in data[TESTS]:
-            print(TESTS + "\t" + data[TESTS][d])
-        if d in data[POS]:
-            print(POS + "\t" + data[POS][d])
-        if d in data[DEATHS]:
-            print(DEATHS + "\t" + data[DEATHS][d])
-        if d in data[RECOV]:
-            print(RECOV + "\t" + data[RECOV][d])
+        if d in data[TESTS][RSA]:
+            print(TESTS + "\t" + data[TESTS][RSA][d])
+        if d in data[POS][RSA]:
+            print(POS + "\t" + data[POS][RSA][d])
+        if d in data[DEATHS][RSA]:
+            print(DEATHS + "\t" + data[DEATHS][RSA][d])
+        if d in data[RECOV][RSA]:
+            print(RECOV + "\t" + data[RECOV][RSA][d])
         print()
 
 def get_png_name(data):
-    name = data[DATASET]
+    name = data[GRAPH_REG]
+    name = name + "_" + data[DATASET]
     name = name + "_" + data[GRAPHTYPE]
     name = name + "_" + data[YSCALE]
     if not data[N_DAY_AV] == 1:
@@ -451,19 +499,23 @@ def get_legend_heading(settings):
 
     if settings[DATASET] == TESTS:
         heading = heading + \
-                "Covid-19 Tests Performed in South Africa"
+                "Covid-19 Tests Performed in " + \
+                REGIONS[settings[GRAPH_REG]]
         y_leg = "Tests Performed"
     elif settings[DATASET] == POS:
         heading = heading + \
-                "Covid-19 Confirmed Cases in South Africa"
+                "Covid-19 Confirmed Cases in " + \
+                REGIONS[settings[GRAPH_REG]]
         y_leg = "Confirmed Cases"
     elif settings[DATASET] == POSTESTS:
         heading = heading + \
-                "Covid-19 Proportion of Tests Positive in South Africa"
+                "Covid-19 Proportion of Tests Positive in " + \
+                REGIONS[settings[GRAPH_REG]]
         y_leg = "Proportion Positive"
     elif settings[DATASET] == PROPREC:
         heading = \
-                "Covid-19 Proportion of Positive Cases Recovered\nin South Africa"
+                "Covid-19 Proportion of Positive Cases Recovered\nin " + \
+                REGIONS[settings[GRAPH_REG]]
         y_leg = "Proportion Recovered"
     elif settings[DATASET] == ACTIVE:
         if settings[GRAPHTYPE] == DAILY:
@@ -471,15 +523,18 @@ def get_legend_heading(settings):
         else:
             heading = "Total known "
         heading = heading + \
-                "Covid-19 Active Cases in South Africa"
+                "Covid-19 Active Cases in " + \
+                REGIONS[settings[GRAPH_REG]]
         y_leg = "Active Cases"
     elif settings[DATASET] == DEATHS:
         heading = heading + \
-                "Covid-19 Confirmed Deaths in South Africa"
+                "Covid-19 Confirmed Deaths in " + \
+                REGIONS[settings[GRAPH_REG]]
         y_leg = "Confirmed Deaths"
     elif settings[DATASET] == RECOV:
         heading = heading + \
-                "Covid-19 Confirmed Recoveries in South Africa"
+                "Covid-19 Confirmed Recoveries in " + \
+                REGIONS[settings[GRAPH_REG]]
         y_leg = "Confirmed Recoveries"
     else:
         print("please give valid plotting data")

@@ -864,6 +864,9 @@ pos	287 796
 tests	2 194 624
 deaths	4 172
 recov	138 241
+wc	pos	79 344
+wc	deaths	2 385
+wc	recov	59 492
 
 # Entry:
 # date	14-07-2020
