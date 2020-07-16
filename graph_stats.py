@@ -285,8 +285,8 @@ def get_prop_data(data, set1, set2, settings):
     data_2 =  np.array([])
     region = settings[GRAPH_REG]
 
-    prev_2 = 0
-    prev_1 = 0
+    prev_2 = -1
+    prev_1 = -1
 
     for t in data[DATE]:
         d = convert_date(t)
@@ -308,6 +308,11 @@ def get_prop_data(data, set1, set2, settings):
             continue
 
         if settings[GRAPHTYPE] == DAILY:
+            if prev_1 < 0 or prev_2 < 0:
+                prev_1 = point_1
+                prev_2 = point_2
+                continue
+
             cur_1 = point_1
             cur_2 = point_2
             point_1 = point_1 - prev_1
@@ -385,7 +390,7 @@ def get_std_data(data, settings):
     y_data =  np.array([])
     region = settings[GRAPH_REG]
 
-    prev_y = 0
+    prev_y = -1
 
     for t in data[DATE]:
         d = convert_date(t)
@@ -405,6 +410,9 @@ def get_std_data(data, settings):
             continue
 
         if settings[GRAPHTYPE] == DAILY:
+            if prev_y < 0:
+                prev_y = y
+                continue
             y_data = np.append(y_data, y - prev_y)
             prev_y = y
         else:
