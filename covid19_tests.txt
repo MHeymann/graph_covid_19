@@ -570,6 +570,9 @@ tests	742742
 pos	34357
 deaths	705
 recov	17291
+wc	pos	22 567
+wc	deaths	525
+wc	recov	11 431
 
 Entry:
 date	02-06-2020
@@ -577,6 +580,9 @@ tests	761534
 pos	35812
 deaths	755
 recov	18313
+wc	pos	23 583
+wc	deaths	568
+wc	recov	12 436
 
 Entry:
 date	03-06-2020
@@ -584,6 +590,9 @@ tests	785979
 pos	37525
 deaths	792
 recov	19682
+wc	pos	24 657
+wc	deaths	597
+wc	recov	13 696
 
 Entry:
 date	04-06-2020
@@ -591,6 +600,9 @@ tests	820675
 pos	40792
 deaths	848
 recov	21311
+wc	pos	27 006
+wc	deaths	651
+wc	recov	14 917
 
 Entry:
 date	05-06-2020
@@ -598,6 +610,9 @@ tests	850871
 pos	43434
 deaths	908
 recov	23088
+wc	pos	28 807
+wc	deaths	704
+wc	recov	16 433
 
 Entry:
 date	06-06-2020
@@ -605,6 +620,9 @@ tests	891668
 pos	45973
 deaths	952
 recov	24258
+wc	pos	30 379
+wc	deaths	729
+wc	recov	17 355
 
 Entry:
 date	07-06-2020
@@ -612,6 +630,9 @@ tests	920064
 pos	48285
 deaths	998
 recov	24364
+wc	pos	31 824
+wc	deaths	774
+wc	recov	17 366
 
 Entry:
 date	08-06-2020
@@ -619,6 +640,9 @@ tests	943059
 pos	50879
 deaths	1080
 recov	26099
+wc	pos	33 568
+wc	deaths	829
+wc	recov	19 101
 
 Entry:
 date	09-06-2020
@@ -626,6 +650,9 @@ tests	968070
 pos	52991
 deaths	1162
 recov	29006
+wc	pos	34 819
+wc	deaths	890
+wc	recov	20 791
 
 Entry:
 date	10-06-2020
@@ -633,6 +660,9 @@ tests	998400
 pos	55421
 deaths	1210
 recov	31505
+wc	pos	36 021
+wc	deaths	927
+wc	recov	22 862
 
 Entry:
 date	11-06-2020
@@ -640,6 +670,9 @@ tests	1028399
 pos	58568
 deaths	1284
 recov	33252
+wc	pos	37 422
+wc	deaths	966
+wc	recov	24 050
 
 Entry:
 date	12-06-2020
@@ -647,6 +680,9 @@ tests	1 060 425
 pos	61 927
 deaths	1 354
 recov	35 008
+wc	pos	38 926
+wc	deaths	1 005
+wc	recov	25 435
 
 Entry:
 date	13-06-2020
@@ -654,6 +690,9 @@ tests	1 087 887
 pos	65 736
 deaths	1 423
 recov	36 850
+wc	pos	40 605
+wc	deaths	1 041
+wc	recov	26 736
 
 Entry:
 date	14-06-2020
@@ -661,6 +700,9 @@ tests	1 121 958
 pos	70 038
 deaths	1 480
 recov	38 531
+wc	pos	42 539
+wc	deaths	1 083
+wc	recov	27 527
 
 Entry:
 date	15-06-2020
@@ -668,6 +710,9 @@ tests	1 146 857
 pos	73 533
 deaths	1 568
 recov	39 867
+wc	pos	44 143
+wc	deaths	1 156
+wc	recov	28 615
 
 Entry:
 date	16-06-2020
@@ -675,6 +720,9 @@ tests	1 172 513
 pos	76 334
 deaths	1 625
 recov	42 063
+wc	pos	45 357
+wc	deaths	1 200
+wc	recov	30 236
 
 Entry:
 date	17-06-2020
@@ -682,6 +730,9 @@ tests	1 200 736
 pos	80 412
 deaths	1 674
 recov	44 331
+wc	pos	46 555
+wc	deaths	1 243
+wc	recov	31 824
 
 Entry:
 date	18-06-2020
@@ -689,6 +740,9 @@ tests	1 228 098
 pos	83 890
 deaths	1 737
 recov	44 920
+wc	pos	47 522
+wc	deaths	1 300
+wc	recov	31 824
 
 Entry:
 date	19-06-2020
@@ -696,6 +750,9 @@ tests	1 260 434
 pos	87 715
 deaths	1 831
 recov	47 825
+wc	pos	48 706
+wc	deaths	1 360
+wc	recov	34 067
 
 Entry:
 date	20-06-2020
@@ -703,6 +760,9 @@ tests	1 293 608
 pos	92 681
 deaths	1 877
 recov	50 326
+wc	pos	50 173
+wc	deaths	1 392
+wc	recov	35 156
 
 Entry:
 date	21-06-2020
@@ -710,6 +770,9 @@ tests	1 328 060
 pos	97 302
 deaths	1 930
 recov	51 608
+wc	pos	51 441
+wc	deaths	1 419
+wc	recov	35 559
 
 Entry:
 date	22-06-2020
@@ -717,6 +780,9 @@ pos	101 590
 tests	1 353 176
 deaths	1 991
 recov	53 444
+wc	pos	52 554
+wc	deaths	1 458
+wc	recov	35 958
 
 Entry:
 date	23-06-2020
@@ -724,6 +790,9 @@ pos	106 108
 tests	1 382 772
 deaths	2 102
 recov	55 045
+wc	pos	53 512
+wc	deaths	1 536
+wc	recov	37 234
 
 Entry:
 date	24-06-2020
@@ -731,6 +800,9 @@ pos	111 796
 tests	1 416 894
 deaths	2 205
 recov	56 874
+wc	pos	55 162
+wc	deaths	1 599
+wc	recov	37 234
 
 Entry:
 date	25-06-2020
@@ -738,6 +810,9 @@ pos	118 375
 tests	1 460 012
 deaths	2 292
 recov	59 974
+wc	pos	56 780
+wc	deaths	1 652
+wc	recov	39 475
 
 Entry:
 date	26-06-2020
@@ -745,6 +820,9 @@ pos	124 590
 tests	1 493 104
 deaths	2 340
 recov	64 111
+wc	pos	57 941
+wc	deaths	1 692
+wc	recov	40 979
 
 Entry:
 date	27-06-2020
@@ -752,6 +830,9 @@ pos	131 800
 tests	1 529 009
 deaths	2 413
 recov	67 094
+wc	pos	59 315
+wc	deaths	1 732
+wc	recov	42 172
 
 Entry:
 date	28-06-2020
@@ -759,6 +840,9 @@ pos	138 134
 tests	1 567 084
 deaths	2 456
 recov	68 925
+wc	pos	60 445
+wc	deaths	1 764
+wc	recov	42 636
 
 Entry:
 date	29-06-2020
@@ -766,6 +850,9 @@ pos	144 264
 tests	1 596 995
 deaths	2 529
 recov	70 614
+wc	pos	61 375
+wc	deaths	1 807
+wc	recov	42 636
 
 Entry:
 date	30-06-2020
@@ -773,6 +860,9 @@ pos	151 209
 tests	1 630 008
 deaths	2 657
 recov	73 543
+wc	pos	62 481
+wc	deaths	1 859
+wc	recov	43 120
 
 Entry:
 date	01-07-2020
@@ -780,6 +870,9 @@ pos	159 333
 tests	1 666 939
 deaths	2 749
 recov	76 025
+wc	pos	64 377
+wc	deaths	1 896
+wc	recov	44 938
 
 Entry:
 date	02-07-2020
@@ -787,6 +880,9 @@ pos	168 061
 tests	1 706 127
 deaths	2 844
 recov	81 999
+wc	pos	65 841
+wc	deaths	1 925
+wc	recov	46 515
 
 Entry:
 date	03-07-2020
@@ -794,6 +890,9 @@ pos	177 124
 tests	1 745 153
 deaths	2 952
 recov	86 298
+wc	pos	66 936
+wc	deaths	1 983
+wc	recov	47 929
 
 Entry:
 date	04-07-2020
@@ -801,6 +900,9 @@ pos	187 977
 tests	1 792 078
 deaths	3 026
 recov	91 227
+wc	pos	68 376
+wc	deaths	2 026
+wc	recov	49 362
 
 Entry:
 date	05-07-2020
@@ -808,6 +910,9 @@ pos	196 750
 tests	1 830 161
 deaths	3 199
 recov	93 315
+wc	pos	69 531
+wc	deaths	2 066
+wc	recov	49 928
 
 Entry:
 date	06-07-2020
@@ -815,6 +920,9 @@ pos	205 721
 tests	1 864 111
 deaths	3 310
 recov	97 848
+wc	pos	70 938
+wc	deaths	2 101
+wc	recov	50 271
 
 Entry:
 date	07-07-2020
@@ -822,6 +930,9 @@ pos	215 855
 tests	1 907 532
 deaths	3 502
 recov	102 299
+wc	pos	72 156
+wc	deaths	2 145
+wc	recov	52 175
 
 Entry:
 date	08-07-2020
