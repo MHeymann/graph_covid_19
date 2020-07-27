@@ -185,7 +185,10 @@ def parse_data(filename):
     curr_date = ""
     with open (filename, "r") as f:
         line = f.readline()
-        while not line == "" and not line[0] == "#":
+        while not line == "":
+            if line.strip() == "" or line.strip()[0] == "#":
+                line = f.readline()
+                continue
             data = line.split("\t")
             if data[0] in REGIONS:
                 i = 1
@@ -350,17 +353,20 @@ def get_active_data(data, settings):
         if not is_date_valid_range(d, settings):
             continue
 
-        if not t in data[POS][region] or not t in data[RECOV][region]:
+        if not t in data[POS][region] or \
+                not t in data[RECOV][region] or \
+                not t in data[DEATHS][region]:
             continue
         try:
             recov = int(data[RECOV][region][t])
+            deaths = int(data[DEATHS][region][t])
             pos = int(data[POS][region][t])
         except ValueError as e:
             print("ValueError")
             print(e)
             continue
 
-        active = pos - recov
+        active = pos - (recov + deaths)
         if active < 0:
             print("negative active cases!!!")
             continue
