@@ -1358,7 +1358,40 @@ pos	445 433
 tests	2 773 778
 deaths	6 769
 recov	265 077
+wc	pos	91 180
+wc	recov	75 595
+wc	deaths	2 897
+wc	tests	402 630
+
+Entry:
+date	27-07-2020
+pos	452 529
+tests	2 802 211
+deaths	7 067
+recov	274 925
+wc	pos	91 659
+wc	recov	76 835
+wc	deaths	2 948
+wc	tests	404 635
+
+Entry:
+date	28-07-2020
+pos	459 761
+tests	2 830 635
+deaths	7 257
+recov	287 313
+wc	pos	92 330
+wc	recov	77 823
+wc	deaths	2 985
+wc	tests	408 539
+
+Entry:
+date	29-07-2020
+pos	471 123
+tests	2 873 163
+deaths	7 497
+recov	297 967
 wc	pos	xx xxx
 wc	recov	xx xxx
-wc	deaths	x xxx
+wc	deaths	xx xxx
 wc	tests	xxx xxx
