@@ -1479,7 +1479,117 @@ pos	538 184
 tests	3 149 807
 deaths	9 604
 recov	387 316
-wc	pos	xx xxx
+wc	pos	97 506
+wc	recov	85 528
+wc	deaths	3 347
+wc	tests	433 443
+
+Entry:
+date	07-08-2020
+pos	545 476
+tests	3 183 658
+deaths	9 909
+recov	394 759
+wc	pos	97 966
+wc	recov	86 415
+wc	deaths	3 374
+wc	tests	435 962
+
+Entry:
+date	08-08-2020
+pos	553 188
+tests	3 220 265
+deaths	10 210
+recov	404 568
+wc	pos	98 354
+wc	recov	86 677
+wc	deaths	3 392
+wc	tests	438 412
+
+Entry:
+date	09-08-2020
+pos	559 858
+tests	3 250 583
+deaths	10 408
+recov	411 147
+wc	pos	98 656
+wc	recov	86 861
+wc	deaths	3 424
+wc	tests	439 776
+
+Entry:
+date	10-08-2020
+pos	563 598
+tests	3 267 494
+deaths	10 621
+recov	417 200
+wc	pos	98 868
+wc	recov	87 998
+wc	deaths	3 454
+wc	tests	440 564
+
+Entry:
+date	11-08-2020
+pos	566 109
+tests	3 278 977
+deaths	10 751
+recov	426 125
+wc	pos	99 074
+wc	recov	88 734
+wc	deaths	3 482
+wc	tests	442 723
+
+Entry:
+date	12-08-2020
+pos	568 919
+tests	3 295 434
+deaths	11 010
+recov	432 029
+wc	pos	99 419
+wc	recov	88 529
+wc	deaths	3 502
+wc	tests	445 475
+
+Entry:
+date	13-08-2020
+pos	572 865
+tests	3 315 497
+deaths	11 270
+recov	437 617
+wc	pos	99 806
+wc	recov	90 115
+wc	deaths	3 528
+wc	tests	448 449
+
+Entry:
+date	14-08-2020
+pos	579 140
+tests	3 351 111
+deaths	11 556
+recov	461 734
+wc	pos	100 344
+wc	recov	90 652
+wc	deaths	3 560
+wc	tests	451 193
+
+Entry:
+date	15-08-2020
+pos	583 653
+tests	3 378 029
+deaths	11 677
+recov	466 941
+wc	pos	100 778
+wc	recov	90 869
+wc	deaths	3 573
+wc	tests	455 104
+
+Entry:
+date	16-08-2020
+pos	587 345
+tests	3 400 638
+deaths	11 839
+recov	472 377
+wc	pos	xxx xxx
 wc	recov	xx xxx
 wc	deaths	x xxx
 wc	tests	xxx xxx
