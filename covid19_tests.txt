@@ -2116,7 +2116,7 @@ Entry:
 date	03-10-2020
 pos	679 716
 tests	4 251 513
-deaths	116 938
+deaths	16 938
 recov	612 763
 wc	pos	xxx xxx
 wc	recov	xx xxx
@@ -2444,10 +2444,10 @@ wc	tests	xxx xxx
 
 Entry:
 date	02-11-2020
-pos	xxx xxx
-tests	4 xxx xxx
-deaths	1x xxx
-recov	6xx xxx
+pos	727 595
+tests	4 852 918
+deaths	19 465
+recov	657 500
 wc	pos	xxx xxx
 wc	recov	xx xxx
 wc	deaths	3 xxx
@@ -2455,10 +2455,10 @@ wc	tests	xxx xxx
 
 Entry:
 date	03-11-2020
-pos	xxx xxx
-tests	4 xxx xxx
-deaths	1x xxx
-recov	6xx xxx
+pos	728 836
+tests	4 868 610
+deaths	19 539
+recov	659 249
 wc	pos	xxx xxx
 wc	recov	xx xxx
 wc	deaths	3 xxx
@@ -2466,21 +2466,538 @@ wc	tests	xxx xxx
 
 Entry:
 date	04-11-2020
-pos	xxx xxx
-tests	4 xxx xxx
-deaths	1x xxx
-recov	6xx xxx
+pos	730 548
+tests	4 893 683
+deaths	19 585
+recov	660 185
 wc	pos	xxx xxx
 wc	recov	xx xxx
 wc	deaths	3 xxx
 wc	tests	xxx xxx
 
 Entry:
-date	0x-11-2020
-pos	xxx xxx
-tests	4 xxx xxx
-deaths	1x xxx
-recov	6xx xxx
+date	05-11-2020
+pos	732 414
+recov	671 579
+deaths	19 677
+tests	4 917 625
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	06-11-2020
+pos	734 175
+recov	675 593
+deaths	19 749
+tests	4 940 719
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	07-11-2020
+pos	735 906
+recov	678 738
+deaths	19 789
+tests	4 963 174
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	08-11-2020
+pos	737 278
+recov	679 688
+deaths	19 809
+tests	4 980 440
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	09-11-2020
+pos	738 525
+recov	680 726
+deaths	19 845
+tests	4 993 081
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	10-11-2020
+pos	740 254
+recov	683 194
+deaths	19 951
+tests	5 010 350
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	11-11-2020
+pos	742 394
+recov	686 458
+deaths	20 011
+tests	5 037 782
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	12-11-2020
+pos	744 732
+recov	690 903
+deaths	20 076
+tests	5 063 457
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	13-11-2020
+pos	746 945
+recov	692 177
+deaths	20 153
+tests	5 086 887
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	14-11-2020
+pos	749 182
+recov	693 261
+deaths	20 206
+tests	5 110 384
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	15-11-2020
+pos	751 024
+recov	693 467
+deaths	20 241
+tests	5 130 192
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	16-11-2020
+pos	752 269
+recov	695 496
+deaths	20 314
+tests	5 142 947
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	17-11-2020
+pos	754 256
+recov	696 820
+deaths	20 433
+tests	5 160 877
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	18-11-2020
+pos	757 144
+recov	701 534
+deaths	20 556
+tests	5 189 580
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	19-11-2020
+pos	759 658
+recov	702 544
+deaths	20 671
+tests	5 214 036
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	20-11-2020
+pos	762 763
+recov	707 040
+deaths	20 759
+tests	5 243 055
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	21-11-2020
+pos	765 409
+recov	707 784
+deaths	20 845
+tests	5 269 062
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	22-11-2020
+pos	767 679
+recov	710 099
+deaths	20 903
+tests	5 290 966
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	23-11-2020
+pos	769 759
+recov	711 195
+deaths	20 968
+tests	5 305 343
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	24-11-2020
+pos	772 252
+recov	716 444
+deaths	21 083
+tests	5 325 631
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	25-11-2020
+pos	775 502
+recov	xxx xxx # not reported due to data reconciliation in GP
+deaths	21 201
+tests	5 355 068
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	26-11-2020
+pos	778 571
+recov	xxx xxx # not reported due to data reconciliation in GP
+deaths	21 289
+tests	5 383 078
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	27-11-2020
+pos	781 941
+recov	722 876
+deaths	21 378
+tests	x xxx xxx #?
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	28-11-2020
+pos	785 139
+recov	723 347
+deaths	21 439
+tests	x xxx xxx #?
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	29-11-2020
+pos	787 702
+recov	730 633
+deaths	21 477
+tests	x xxx xxx #?
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	30-11-2020
+pos	790 004
+recov	731 242
+deaths	21 535
+tests	x xxx xxx #?
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	01-12-2020
+pos	792 299
+recov	732 531
+deaths	21 644
+tests	x xxx xxx #?
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	02-12-2020
+pos	796 472
+recov	734 305
+deaths	21 709
+tests	x xxx xxx #?
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	03-12-2020
+pos	800 872
+recov	739 367
+deaths	21 803
+tests	5 500 669
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	04-12-2020
+pos	805 804
+recov	740 450
+deaths	21 963
+tests	5 534 084
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	05-12-2020
+pos	810 449
+recov	744 298
+deaths	22 067
+tests	5 565 928
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	06-12-2020
+pos	814 565
+recov	744 780
+deaths	22 206
+tests	5 592 663
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	07-12-2020
+pos	817 878
+recov	745 750
+deaths	22 249
+tests	5 611 915
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	08-12-2020
+pos	821 889
+recov	753 072
+deaths	22 432
+tests	5 640 042
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	09-12-2020
+pos	828 598
+recov	754 658
+deaths	22 574
+tests	5 690 263
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	10-12-2020
+pos	836 764
+recov	756 671
+deaths	22 747
+tests	5 735 470
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	11-12-2020
+pos	845 083
+recov	758 373
+deaths	22 952
+tests	5 779 544
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	12-12-2020
+pos	852 965
+recov	760 118
+deaths	23 106
+tests	5 819 755
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	13-12-2020
+pos	860 964
+recov	761 011
+deaths	23 276
+tests	5 859 178
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	14-12-2020
+pos	866 127
+recov	762 746
+deaths	23 451
+tests	5 884 227
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	15-12-2020
+pos	873 679
+recov	764 977
+deaths	23 661
+tests	5 920 574
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	16-12-2020
+pos	883 687
+recov	774 585
+deaths	23 827
+tests	5 968 692
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	17-12-2020
+pos	892 813
+recov	780 313
+deaths	24 011
+tests	6 011 235
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	18-12-2020
+pos	901 538
+recov	783 818
+deaths	24 285
+tests	6 051 986
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	19-12-2020
+pos	912 477
+recov	787 782
+deaths	24 539
+tests	6 100 373
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	20-12-2020
+pos	921 922
+recov	793 914
+deaths	24 691
+tests	6 140 839
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	21-12-2020
+pos	930 711
+recov	796 346
+deaths	24 907
+tests	6 176 683
+wc	pos	xxx xxx
+wc	recov	xx xxx
+wc	deaths	3 xxx
+wc	tests	xxx xxx
+
+Entry:
+date	2x-12-2020
+pos	9xx xxx
+recov	7xx xxx
+deaths	2x xxx
+tests	6 xxx xxx
 wc	pos	xxx xxx
 wc	recov	xx xxx
 wc	deaths	3 xxx
